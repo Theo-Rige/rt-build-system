@@ -29,6 +29,26 @@ class Component {
     private $data;
 
     /**
+     * List of code tabs.
+     *
+     * @var array
+     */
+    public $codes = [
+        'php' => [
+            'label' => 'PHP',
+            'file' => 'class.php',
+        ],
+        'js' => [
+            'label' => 'JavaScript',
+            'file' => 'script.js',
+        ],
+        'template' => [
+            'label' => 'Template',
+            'file' => 'template.php',
+        ],
+    ];
+
+    /**
      * Constructor.
      *
      * @param string $name Component name.

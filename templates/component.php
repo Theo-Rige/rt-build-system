@@ -22,31 +22,21 @@ wp_head();
                 <h2>Code</h2>
                 <div id="code" class="tabs">
                     <div class="tabs-list">
-                        <button type="button" id="code-tabs-php-trigger" class="tabs-trigger">PHP</button>
-                        <button type="button" id="code-tabs-js-trigger" class="tabs-trigger">JavaScript</button>
+                        <?php foreach ($component->codes as $key => $code) : ?>
+                            <button type="button" id="code-tabs-<?= $key ?>-trigger" class="tabs-trigger"><?= $code['label'] ?></button>
+                        <?php endforeach; ?>
                         <div class="tabs-indicator"></div>
                     </div>
-                    <div id="code-tabs-php-panel" class="tabs-panel">
-                        <pre><code><?php
-                                    $templatePath = plugin_dir_path(dirname(__FILE__)) . 'components/' . $slug . '/class.php';
-                                    if (file_exists($templatePath)) {
-                                        echo htmlspecialchars(file_get_contents($templatePath));
-                                    } else {
-                                        echo 'Template file not found.';
-                                    } ?>
-                        </code></pre>
-                    </div>
-                    <div id="code-tabs-js-panel" class="tabs-panel">
-                        <pre><code><?php
-                                    $scriptPath = plugin_dir_path(dirname(__FILE__)) . 'components/' . $slug . '/script.js';
-                                    if (file_exists($scriptPath)) {
-                                        echo trim(htmlspecialchars(file_get_contents($scriptPath)));
-                                    } else {
-                                        echo 'Script file not found.';
-                                    }
-                                    ?>
-                        </code></pre>
-                    </div>
+                    <?php foreach ($component->codes as $key => $code) : ?>
+                        <div id="code-tabs-<?= $key ?>-panel" class="tabs-panel">
+                            <?php $scriptPath = plugin_dir_path(dirname(__FILE__)) . 'components/' . $slug . '/' . $code['file'];
+                            if (file_exists($scriptPath)) : ?>
+                                <pre><code><?= trim(htmlspecialchars(file_get_contents($scriptPath))) ?></code></pre>
+                            <?php else : ?>
+                                <p><?= $code['label'] ?> file not found.</p>
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
             </section>
 
