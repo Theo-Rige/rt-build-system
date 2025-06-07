@@ -13,6 +13,9 @@
 # The plugin composer.lock file
 composer.lock
 
+# The plugin package-lock.json file
+package-lock.json
+
 # The plugin .DS_Store file
 .DS_Store
 
