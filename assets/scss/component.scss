@@ -3,6 +3,15 @@ body.single-component {
 		max-width: var(--main-width);
 		margin: 80px auto;
 
+		section {
+			margin-top: 40px;
+
+			h2 {
+				font-size: 1.75rem;
+				margin: 16px 0;
+			}
+		}
+
 		#preview {
 			padding: 24px;
 			border-radius: 8px;
@@ -52,7 +61,8 @@ body.single-component {
 					margin: 0;
 					padding: 16px;
 					font: 400 0.875rem monospace;
-					background: var(--color-neutral-900) !important;
+					color: var(--color-neutral-300);
+					background: var(--color-neutral-900);
 				}
 			}
 		}

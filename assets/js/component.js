@@ -36,7 +36,6 @@ class Tabs {
 			})
 		})
 
-		// Set indicator on init
 		this.updateIndicator(this.tabs[0])
 	}
 
@@ -65,27 +64,48 @@ class Tabs {
 }
 
 const codeTabs = document.getElementById('code')
-const phpCodeSection = document.getElementById('code-tabs-php-panel')
-const jsCodeSection = document.getElementById('code-tabs-js-panel')
+const phpCodePanel = document.getElementById('code-tabs-php-panel')
+const jsCodePanel = document.getElementById('code-tabs-js-panel')
+const templateCodePanel = document.getElementById('code-tabs-template-panel')
 
-if (phpCodeSection) {
-	const code = phpCodeSection.querySelector('code')
+if (phpCodePanel) {
+	const code = phpCodePanel.querySelector('code')
 
 	if (code) {
-		phpCodeSection.innerHTML = await codeToHtml(code.textContent, {
+		phpCodePanel.innerHTML = await codeToHtml(code.textContent, {
 			lang: 'php',
-			theme: 'github-dark'
+			theme: 'github-dark',
+			colorReplacements: {
+				'#24292e': '#181d27'
+			}
 		})
 	}
 }
 
-if (jsCodeSection) {
-	const code = jsCodeSection.querySelector('code')
+if (jsCodePanel) {
+	const code = jsCodePanel.querySelector('code')
 
 	if (code) {
-		jsCodeSection.innerHTML = await codeToHtml(code.textContent, {
+		jsCodePanel.innerHTML = await codeToHtml(code.textContent, {
 			lang: 'js',
-			theme: 'github-dark'
+			theme: 'github-dark',
+			colorReplacements: {
+				'#24292e': '#181d27'
+			}
+		})
+	}
+}
+
+if (templateCodePanel) {
+	const code = templateCodePanel.querySelector('code')
+
+	if (code) {
+		templateCodePanel.innerHTML = await codeToHtml(code.textContent, {
+			lang: 'html',
+			theme: 'github-dark',
+			colorReplacements: {
+				'#24292e': '#181d27'
+			}
 		})
 	}
 }
