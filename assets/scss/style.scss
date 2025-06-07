@@ -28,6 +28,7 @@
 	--main-width: 1200px;
 }
 
+// PPEditorialNew Font
 @font-face {
 	font-family: 'PPEditorialNew';
 	font-style: normal;
@@ -98,6 +99,99 @@
 	src: url('../fonts/PPEditorialNew/PPEditorialNew-Ultraboldltalic.woff2') format('woff2');
 }
 
+// Neue Montreal Font
+@font-face {
+	font-family: 'PPNeueMontreal';
+	font-style: normal;
+	font-weight: 100;
+	src: url('../fonts/PPNeueMontreal/PPNeueMontreal-Thin.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'PPNeueMontreal';
+	font-style: normal;
+	font-weight: 200;
+	src: url('../fonts/PPNeueMontreal/PPNeueMontreal-Light.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'PPNeueMontreal';
+	font-style: normal;
+	font-weight: 300;
+	src: url('../fonts/PPNeueMontreal/PPNeueMontreal-Book.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'PPNeueMontreal';
+	font-style: normal;
+	font-weight: 400;
+	src: url('../fonts/PPNeueMontreal/PPNeueMontreal-Regular.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'PPNeueMontreal';
+	font-style: normal;
+	font-weight: 500;
+	src: url('../fonts/PPNeueMontreal/PPNeueMontreal-Medium.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'PPNeueMontreal';
+	font-style: normal;
+	font-weight: 700;
+	src: url('../fonts/PPNeueMontreal/PPNeueMontreal-Bold.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'PPNeueMontreal';
+	font-style: italic;
+	font-weight: 100;
+	src: url('../fonts/PPNeueMontreal/PPNeueMontreal-Thinltalic.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'PPNeueMontreal';
+	font-style: italic;
+	font-weight: 400;
+	src: url('../fonts/PPNeueMontreal/PPNeueMontreal-Italic.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'PPNeueMontreal';
+	font-style: italic;
+	font-weight: 700;
+	src: url('../fonts/PPNeueMontreal/PPNeueMontreal-Boldltalic.woff2') format('woff2');
+}
+
 html {
 	font-size: 100%;
+}
+
+body {
+	font-family: 'PPNeueMontreal', sans-serif;
+	font-weight: 400;
+	color: var(--color-neutral-900);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: 'PPEditorialNew', sans-serif;
+	font-weight: 800;
+	color: var(--color-neutral-900);
+}
+
+button,
+input,
+select,
+textarea {
+	font: 400 1rem 'PPNeueMontreal', sans-serif;
+	color: var(--color-neutral-900);
+}
+
+button:hover:not(:disabled) {
+	cursor: pointer;
 }
