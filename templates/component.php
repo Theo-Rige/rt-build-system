@@ -9,17 +9,19 @@ $component = new $className();
 
 wp_head();
 ?>
-<main>
-    <article>
-        <h1><?= get_the_title() ?></h1>
-        <section>
-            <h2>Preview</h2>
-            <?= $component->loadTemplate() ?>
-        </section>
-        <section>
-            <h2>PHP Code</h2>
-            <div id="component-php">
-                <pre>
+
+<body <?php body_class(); ?>>
+    <main>
+        <article>
+            <h1><?= get_the_title() ?></h1>
+            <section>
+                <h2>Preview</h2>
+                <?= $component->loadTemplate() ?>
+            </section>
+            <section>
+                <h2>PHP Code</h2>
+                <div id="component-php">
+                    <pre>
                 <code>
                     <?php
                     $templatePath = plugin_dir_path(dirname(__FILE__)) . 'components/' . $slug . '/class.php';
@@ -31,12 +33,12 @@ wp_head();
                     ?>
                 </code>
             </pre>
-            </div>
-        </section>
-        <section>
-            <h2>JavaScript Code</h2>
-            <div id="component-js">
-                <pre>
+                </div>
+            </section>
+            <section>
+                <h2>JavaScript Code</h2>
+                <div id="component-js">
+                    <pre>
                 <code>
                     <?php
                     $scriptPath = plugin_dir_path(dirname(__FILE__)) . 'components/' . $slug . '/script.js';
@@ -48,9 +50,10 @@ wp_head();
                     ?>
                 </code>
                 </pre>
-            </div>
-        </section>
-    </article>
-</main>
+                </div>
+            </section>
+        </article>
+    </main>
 
-<?php wp_footer(); ?>
+    <?php wp_footer(); ?>
+</body>
