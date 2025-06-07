@@ -1,0 +1,20 @@
+# The plugin zip file
+*.zip
+
+# The plugin build directory
+/build
+
+# The plugin node_modules directory
+/node_modules
+
+# The plugin vendor directory
+/vendor
+
+# The plugin composer.lock file
+composer.lock
+
+# The plugin .DS_Store file
+.DS_Store
+
+# The plugin .git directory
+.git

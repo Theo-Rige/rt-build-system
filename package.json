@@ -1,0 +1,20 @@
+{
+	"name": "rt-plugin-template",
+	"author": "Théo RIGÉ",
+	"version": "0.1.0",
+	"license": "ISC",
+	"scripts": {
+		"gulp": "gulp"
+	},
+	"dependencies": {
+		"gulp-rename": "^2.0.0",
+		"gulp-sourcemaps": "^3.0.0"
+	},
+	"devDependencies": {
+		"gulp": "^5.0.0",
+		"gulp-autoprefixer": "^8.0.0",
+		"gulp-sass": "^6.0.0",
+		"gulp-terser": "^2.1.0",
+		"sass": "^1.84.0"
+	}
+}
