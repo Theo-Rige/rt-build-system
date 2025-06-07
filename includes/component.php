@@ -46,7 +46,8 @@ class Component {
      * Enqueue component scripts and styles.
      */
     public function enqueueAssets() {
-        wp_enqueue_script('rtbs-component-script', RTBS_PLUGIN_URL . 'assets/js/component.js', [], RTBS_PLUGIN_VERSION, true);
+        wp_enqueue_script('rtbs-component-script', RTBS_PLUGIN_URL . 'assets/js/component.min.js', [], RTBS_PLUGIN_VERSION, true);
+        wp_enqueue_style('rtbs-component-style', RTBS_PLUGIN_URL . 'assets/css/component.min.css', [], RTBS_PLUGIN_VERSION);
         wp_enqueue_style('rtbs-style', RTBS_PLUGIN_URL . 'assets/css/style.min.css', [], RTBS_PLUGIN_VERSION);
 
         $scriptPath = plugin_dir_path(dirname(__FILE__)) . 'components/' . $this->name . '/script.js';
