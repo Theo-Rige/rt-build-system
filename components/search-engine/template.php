@@ -19,7 +19,7 @@
     <div id="search-engine-results">
         <?php if (!empty($posts)) : ?>
             <?php foreach ($posts as $post) {
-                echo $instance->loadTemplate('_partials/card', ['post' => $post]);
+                echo $component->loadTemplate('_partials/card', ['post' => $post]);
             } ?>
         <?php else : ?>
             <p><?= __('No results found.', 'rt-build-system'); ?></p>

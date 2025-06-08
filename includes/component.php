@@ -124,7 +124,7 @@ class Component {
             extract($data);
         }
 
-        $instance = $this;
+        $component = $this;
 
         ob_start();
         include $templatePath;
