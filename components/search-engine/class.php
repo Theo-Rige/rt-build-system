@@ -119,5 +119,3 @@ class SearchEngine extends Component {
         ]);
     }
 }
-
-SearchEngine::registerAjaxActions();

@@ -5,12 +5,7 @@ namespace RTBS;
 require_once RTBS_PLUGIN_DIR . 'includes/admin.php';
 require_once RTBS_PLUGIN_DIR . 'includes/tool.php';
 
-/**
- * Dynamically require all component class files to register AJAX actions.
- */
-foreach (glob(RTBS_PLUGIN_DIR . 'components/*/class.php') as $componentClassFile) {
-    require_once $componentClassFile;
-}
+
 
 class Plugin {
     const COMPONENTS_PAGE = 'components';
@@ -27,6 +22,7 @@ class Plugin {
         self::loadTextDomain();
         add_action('init', [self::class, 'registerCustomObjects']);
         add_filter('template_include', [self::class, 'renderComponentsPage']);
+        self::registerComponentAjaxActions();
 
         if (is_admin()) Admin::init();
     }
@@ -126,6 +122,24 @@ class Plugin {
         }
 
         return $template;
+    }
+
+    /**
+     * Registers AJAX actions for all component classes.
+     *
+     * @return void
+     */
+    public static function registerComponentAjaxActions() {
+        foreach (glob(RTBS_PLUGIN_DIR . 'components/*/class.php') as $componentClassFile) {
+            require_once $componentClassFile;
+
+            $componentSlug = basename(dirname($componentClassFile));
+            $componentClass = Component::getComponentClass($componentSlug);
+
+            if (class_exists($componentClass) && method_exists($componentClass, 'registerAjaxActions')) {
+                $componentClass::registerAjaxActions();
+            }
+        }
     }
 
     /**
