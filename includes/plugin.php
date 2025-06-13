@@ -91,6 +91,30 @@ class Plugin {
     }
 
     /**
+     * Creates existing component posts for components already defined in the components directory.
+     * 
+     * @return void
+     */
+    public static function createExistingComponentsPosts() {
+        $components = glob(RTBS_PLUGIN_DIR . 'components/*', GLOB_ONLYDIR);
+        foreach ($components as $componentDir) {
+            $componentName = basename($componentDir);
+            $existingPost = get_page_by_path($componentName, OBJECT, self::COMPONENT_POST_TYPE);
+
+            if (!$existingPost) {
+                $postData = [
+                    'post_title' => ucfirst($componentName),
+                    'post_content' => '',
+                    'post_status' => 'publish',
+                    'post_type' => self::COMPONENT_POST_TYPE,
+                    'post_name' => $componentName,
+                ];
+                wp_insert_post($postData);
+            }
+        }
+    }
+
+    /**
      * Registers the scripts and styles for the plugin.
      *
      * @return void
@@ -128,6 +152,7 @@ class Plugin {
      */
     public static function activate() {
         self::registerCustomObjects();
+        self::createExistingComponentsPosts();
         flush_rewrite_rules();
     }
 
