@@ -26,7 +26,6 @@ class Plugin {
     public static function init() {
         self::loadTextDomain();
         add_action('init', [self::class, 'registerCustomObjects']);
-        add_action('wp_enqueue_scripts', [self::class, 'registerScripts']);
         add_filter('template_include', [self::class, 'renderComponentsPage']);
 
         if (is_admin()) Admin::init();
@@ -112,20 +111,6 @@ class Plugin {
                 wp_insert_post($postData);
             }
         }
-    }
-
-    /**
-     * Registers the scripts and styles for the plugin.
-     *
-     * @return void
-     */
-    public static function registerScripts() {
-        global $post;
-
-        // if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, self::SHORTCODE)) {
-        //     wp_enqueue_script('script', RTBS_PLUGIN_URL . 'assets/js/script.min.js', [], RTBS_PLUGIN_VERSION, true);
-        //     wp_enqueue_style('style', RTBS_PLUGIN_URL . 'assets/css/style.min.css', [], RTBS_PLUGIN_VERSION);
-        // }
     }
 
     /**
