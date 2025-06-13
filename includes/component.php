@@ -31,14 +31,14 @@ class Component {
             'label' => 'PHP',
             'file' => 'class.php',
         ],
-        'js' => [
-            'label' => 'JavaScript',
-            'file' => 'script.js',
-        ],
         'template' => [
             'label' => 'Template',
             'file' => 'template.php',
         ],
+        'js' => [
+            'label' => 'JavaScript',
+            'file' => 'script.js',
+        ]
     ];
 
     public static function getComponentClass($slug) {
