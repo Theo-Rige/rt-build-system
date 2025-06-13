@@ -79,7 +79,7 @@ class SearchEngine extends Component {
 
         $categories = get_object_taxonomies(self::POST_TYPE);
         $categories = array_filter($categories, function ($category) {
-            return isset($_POST[$category]) && is_array($_POST[$category]) && !empty($_POST[$category]);
+            return isset($_POST[$category]) && !empty($_POST[$category]);
         });
 
         if (!empty($categories)) {
