@@ -19,21 +19,14 @@ class Component {
      *
      * @var string
      */
-    protected $name;
-
-    /**
-     * Component data.
-     *
-     * @var array
-     */
-    private $data;
+    const NAME = 'component';
 
     /**
      * List of code tabs.
      *
      * @var array
      */
-    public $codes = [
+    const CODES = [
         'php' => [
             'label' => 'PHP',
             'file' => 'class.php',
@@ -48,44 +41,58 @@ class Component {
         ],
     ];
 
-    /**
-     * Constructor.
-     *
-     * @param string $name Component name.
-     * @param array  $data Component data to be passed to the template.
-     */
-    public function __construct($name, $data = []) {
-        $this->name = $name;
-        $this->data = $data;
+    public static function getComponentClass($slug) {
+        $className = 'RTBS\\' . str_replace('-', '', ucwords($slug, '-'));
 
-        add_action('wp_enqueue_scripts', [$this, 'enqueueAssets']);
-        add_filter('script_loader_tag', [$this, 'addModuleType'], 10, 3);
+        if (class_exists($className)) return $className;
+
+        error_log("Component class not found: $className for slug: $slug");
+        return null;
+    }
+
+    /**
+     * Initialize component hooks.
+     */
+    public static function init() {
+        add_action('wp_enqueue_scripts', [static::class, 'enqueueAssets']);
+        add_filter('script_loader_tag', [static::class, 'addModuleType'], 10, 3);
+    }
+
+    /**
+     * Get component name (should be overridden by child classes).
+     * 
+     * @return string Component name.
+     */
+    public static function getName() {
+        return static::NAME ?? 'component';
     }
 
     /**
      * Enqueue component scripts and styles.
      */
-    public function enqueueAssets() {
+    public static function enqueueAssets() {
+        $name = static::getName();
+
         wp_enqueue_script('rtbs-component-script', RTBS_PLUGIN_URL . 'assets/js/component.min.js', [], RTBS_PLUGIN_VERSION, true);
         wp_enqueue_style('rtbs-component-style', RTBS_PLUGIN_URL . 'assets/css/component.min.css', [], RTBS_PLUGIN_VERSION);
         wp_enqueue_style('rtbs-style', RTBS_PLUGIN_URL . 'assets/css/style.min.css', [], RTBS_PLUGIN_VERSION);
 
-        $scriptPath = plugin_dir_path(dirname(__FILE__)) . 'components/' . $this->name . '/script.js';
-        $stylePath = plugin_dir_path(dirname(__FILE__)) . 'components/' . $this->name . '/style.css';
+        $scriptPath = self::getComponentPath($name, 'script.js');
+        $stylePath = self::getComponentPath($name, 'style.css');
 
         if (file_exists($scriptPath)) {
-            $scriptURL = plugin_dir_url(dirname(__FILE__)) . 'components/' . $this->name . '/script.js';
-            wp_enqueue_script('rtbs-' . $this->name . '-script', $scriptURL, [], RTBS_PLUGIN_VERSION, true);
+            $scriptURL = self::getComponentUrl($name, 'script.js');
+            wp_enqueue_script('rtbs-' . $name . '-script', $scriptURL, [], RTBS_PLUGIN_VERSION, true);
 
-            wp_localize_script('rtbs-' . $this->name . '-script', 'RTBS', [
+            wp_localize_script('rtbs-' . $name . '-script', 'RTBS', [
                 'ajaxUrl' => admin_url('admin-ajax.php'),
                 'nonce' => wp_create_nonce('rtbs_nonce')
             ]);
         }
 
         if (file_exists($stylePath)) {
-            $styleURL = plugin_dir_url(dirname(__FILE__)) . 'components/' . $this->name . '/style.css';
-            wp_enqueue_style('rtbs-' . $this->name . '-style', $styleURL, [], RTBS_PLUGIN_VERSION);
+            $styleURL = self::getComponentUrl($name, 'style.css');
+            wp_enqueue_style('rtbs-' . $name . '-style', $styleURL, [], RTBS_PLUGIN_VERSION);
         }
     }
 
@@ -97,7 +104,7 @@ class Component {
      * @param string $src The script source URL.
      * @return string Modified script tag.
      */
-    public function addModuleType($tag, $handle, $src) {
+    public static function addModuleType($tag, $handle, $src) {
         if ($handle === 'rtbs-component-script') {
             return str_replace('src=', 'type="module" src=', $tag);
         }
@@ -106,25 +113,47 @@ class Component {
     }
 
     /**
+     * Helper to get component path.
+     *
+     * @param string $name Component name.
+     * @param string $file File name.
+     * @return string Full path to component file.
+     */
+    protected static function getComponentPath($name, $file = '') {
+        return plugin_dir_path(dirname(__FILE__)) . 'components/' . $name . '/' . $file;
+    }
+
+    /**
+     * Helper to get component URL.
+     *
+     * @param string $name Component name.
+     * @param string $file File name.
+     * @return string Full URL to component file.
+     */
+    protected static function getComponentUrl($name, $file = '') {
+        return plugin_dir_url(dirname(__FILE__)) . 'components/' . $name . '/' . $file;
+    }
+
+    /**
      * Load component template.
      *
+     * @param string $name Template name.
+     * @param array $data Template data.
      * @return string|false The template content or false if template not found.
      */
-    public function loadTemplate($name = 'template', $data = []) {
-        $templatePath = plugin_dir_path(dirname(__FILE__)) . 'components/' . $this->name . '/' . $name . '.php';
+    public static function loadTemplate($name = 'template', $data = []) {
+        $componentName = static::getName();
+        $templatePath = self::getComponentPath($componentName, $name . '.php');
 
         if (!file_exists($templatePath)) {
-            error_log("Template file not found: $templatePath for component: " . $this->name);
+            error_log("Template file not found: $templatePath for component: " . $componentName);
             return false;
         }
 
-        if (empty($data) && !empty($this->data) && is_array($this->data)) {
-            extract($this->data);
-        } else {
-            extract($data);
-        }
+        extract($data);
 
-        $component = $this;
+        // Make component class available to template
+        $component = static::class;
 
         ob_start();
         include $templatePath;

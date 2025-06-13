@@ -18,9 +18,9 @@
     </form>
     <div id="search-engine-results">
         <?php if (!empty($posts)) : ?>
-            <?php foreach ($posts as $post) {
-                echo $component->loadTemplate('_partials/card', ['post' => $post]);
-            } ?>
+            <?php foreach ($posts as $post) : ?>
+                <?= $component::loadTemplate('_partials/card', ['post' => $post]); ?>
+            <?php endforeach; ?>
         <?php else : ?>
             <p><?= __('No results found.', 'rt-build-system'); ?></p>
         <?php endif; ?>

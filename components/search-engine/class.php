@@ -10,9 +10,6 @@ namespace RTBS;
 
 if (! defined('ABSPATH')) exit;
 
-use RTBS\Plugin;
-use RTBS\Component;
-
 require_once RTBS_PLUGIN_DIR . 'includes/plugin.php';
 require_once RTBS_PLUGIN_DIR . 'includes/component.php';
 
@@ -21,17 +18,14 @@ require_once RTBS_PLUGIN_DIR . 'includes/component.php';
  */
 class SearchEngine extends Component {
     /**
-     * Constructor.
-     *
-     * @param string $name Component name.
-     * @param array  $data Component data to be passed to the template.
+     * Component name.
      */
-    public function __construct($name = 'search-engine', $data = []) {
-        $data['categories'] = get_object_taxonomies(Plugin::COMPONENT_POST_TYPE);
-        $data['posts'] = $this->getPosts();
+    const NAME = 'search-engine';
 
-        parent::__construct($name, $data);
-    }
+    /**
+     * Post type to search.
+     */
+    const POST_TYPE = Plugin::COMPONENT_POST_TYPE;
 
     /**
      * Register AJAX actions for the component.
@@ -41,13 +35,32 @@ class SearchEngine extends Component {
         add_action('wp_ajax_nopriv_rtbs_get_posts', [self::class, 'ajaxGetPosts']);
     }
 
-    private function getPosts() {
+    /**
+     * Get posts.
+     * 
+     * @return array Array of posts.
+     */
+    public static function getPosts() {
         $posts = get_posts([
-            'post_type' => Plugin::COMPONENT_POST_TYPE,
+            'post_type' => self::POST_TYPE,
             'numberposts' => -1
         ]);
 
         return $posts;
+    }
+
+    /**
+     * Load template with component-specific data.
+     *
+     * @param string $name Template name.
+     * @param array $data Template data.
+     * @return string|false The template content or false if template not found.
+     */
+    public static function loadTemplate($name = 'template', $data = []) {
+        $data['categories'] = get_object_taxonomies(self::POST_TYPE);
+        $data['posts'] = self::getPosts();
+
+        return parent::loadTemplate($name, $data);
     }
 
     /**
@@ -59,12 +72,12 @@ class SearchEngine extends Component {
         $keyword = sanitize_text_field($_POST['keyword'] ?? '');
 
         $args = [
-            'post_type' => Plugin::COMPONENT_POST_TYPE,
+            'post_type' => self::POST_TYPE,
             's' => $keyword,
             'tax_query' => []
         ];
 
-        $categories = get_object_taxonomies(Plugin::COMPONENT_POST_TYPE);
+        $categories = get_object_taxonomies(self::POST_TYPE);
         $categories = array_filter($categories, function ($category) {
             return isset($_POST[$category]) && is_array($_POST[$category]) && !empty($_POST[$category]);
         });
@@ -89,14 +102,13 @@ class SearchEngine extends Component {
         }
 
         $html = '';
-        $instance = new self();
 
         if (empty($posts)) {
             $html = '<div class="rtbs-no-results">No components found matching your criteria.</div>';
         } else {
             ob_start();
             foreach ($posts as $post) {
-                echo $instance->loadTemplate('_partials/card', ['post' => $post]);
+                echo self::loadTemplate('_partials/card', ['post' => $post]);
             }
             $html = ob_get_clean();
         }

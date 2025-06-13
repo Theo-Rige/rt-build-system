@@ -1,11 +1,13 @@
 <?php
 
+namespace RTBS;
+
 $slug = get_post_field('post_name');
 
 require_once RTBS_PLUGIN_DIR . 'components/' . $slug . '/class.php';
 
-$className = 'RTBS\\' . str_replace('-', '', ucwords($slug, '-'));
-$component = new $className();
+$component = Component::getComponentClass($slug);
+$component::init();
 
 wp_head();
 ?>
@@ -16,18 +18,18 @@ wp_head();
             <h1><?= get_the_title() ?></h1>
             <p><?= get_the_content() ?></p>
             <div id="preview">
-                <?= $component->loadTemplate() ?>
+                <?= $component::loadTemplate() ?>
             </div>
             <section>
                 <h2>Code</h2>
                 <div id="code" class="tabs">
                     <div class="tabs-list">
-                        <?php foreach ($component->codes as $key => $code) : ?>
+                        <?php foreach ($component::CODES as $key => $code) : ?>
                             <button type="button" id="code-tabs-<?= $key ?>-trigger" class="tabs-trigger"><?= $code['label'] ?></button>
                         <?php endforeach; ?>
                         <div class="tabs-indicator"></div>
                     </div>
-                    <?php foreach ($component->codes as $key => $code) : ?>
+                    <?php foreach ($component::CODES as $key => $code) : ?>
                         <div id="code-tabs-<?= $key ?>-panel" class="tabs-panel">
                             <?php $scriptPath = plugin_dir_path(dirname(__FILE__)) . 'components/' . $slug . '/' . $code['file'];
                             if (file_exists($scriptPath)) : ?>
