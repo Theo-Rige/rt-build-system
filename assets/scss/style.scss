@@ -28,139 +28,130 @@
 	--main-width: 1200px;
 }
 
-// PPEditorialNew Font
 @font-face {
-	font-family: 'PPEditorialNew';
+	font-family: 'Poppins';
 	font-style: normal;
 	font-weight: 100;
-	src: url('../fonts/PPEditorialNew/PPEditorialNew-Thin.woff2') format('woff2');
+	src: url('../fonts/Poppins/Poppins-Thin.ttf') format('truetype');
 }
 
 @font-face {
-	font-family: 'PPEditorialNew';
+	font-family: 'Poppins';
 	font-style: normal;
 	font-weight: 200;
-	src: url('../fonts/PPEditorialNew/PPEditorialNew-Ultralight.woff2') format('woff2');
+	src: url('../fonts/Poppins/Poppins-ExtraLight.ttf') format('truetype');
 }
 
 @font-face {
-	font-family: 'PPEditorialNew';
-	font-style: normal;
-	font-weight: 400;
-	src: url('../fonts/PPEditorialNew/PPEditorialNew-Regular.woff2') format('woff2');
-}
-
-@font-face {
-	font-family: 'PPEditorialNew';
-	font-style: normal;
-	font-weight: 700;
-	src: url('../fonts/PPEditorialNew/PPEditorialNew-Bold.woff2') format('woff2');
-}
-
-@font-face {
-	font-family: 'PPEditorialNew';
-	font-style: normal;
-	font-weight: 800;
-	src: url('../fonts/PPEditorialNew/PPEditorialNew-Ultrabold.woff2') format('woff2');
-}
-
-@font-face {
-	font-family: 'PPEditorialNew';
-	font-style: italic;
-	font-weight: 100;
-	src: url('../fonts/PPEditorialNew/PPEditorialNew-Thinltalic.woff2') format('woff2');
-}
-
-@font-face {
-	font-family: 'PPEditorialNew';
-	font-style: italic;
-	font-weight: 200;
-	src: url('../fonts/PPEditorialNew/PPEditorialNew-Ultralightltalic.woff2') format('woff2');
-}
-
-@font-face {
-	font-family: 'PPEditorialNew';
-	font-style: italic;
-	font-weight: 400;
-	src: url('../fonts/PPEditorialNew/PPEditorialNew-Italic.woff2') format('woff2');
-}
-
-@font-face {
-	font-family: 'PPEditorialNew';
-	font-style: italic;
-	font-weight: 700;
-	src: url('../fonts/PPEditorialNew/PPEditorialNew-Boldltalic.woff2') format('woff2');
-}
-
-@font-face {
-	font-family: 'PPEditorialNew';
-	font-style: italic;
-	font-weight: 800;
-	src: url('../fonts/PPEditorialNew/PPEditorialNew-Ultraboldltalic.woff2') format('woff2');
-}
-
-// Neue Montreal Font
-@font-face {
-	font-family: 'PPNeueMontreal';
-	font-style: normal;
-	font-weight: 100;
-	src: url('../fonts/PPNeueMontreal/PPNeueMontreal-Thin.woff2') format('woff2');
-}
-
-@font-face {
-	font-family: 'PPNeueMontreal';
-	font-style: normal;
-	font-weight: 200;
-	src: url('../fonts/PPNeueMontreal/PPNeueMontreal-Light.woff2') format('woff2');
-}
-
-@font-face {
-	font-family: 'PPNeueMontreal';
+	font-family: 'Poppins';
 	font-style: normal;
 	font-weight: 300;
-	src: url('../fonts/PPNeueMontreal/PPNeueMontreal-Book.woff2') format('woff2');
+	src: url('../fonts/Poppins/Poppins-Light.ttf') format('truetype');
 }
 
 @font-face {
-	font-family: 'PPNeueMontreal';
+	font-family: 'Poppins';
 	font-style: normal;
 	font-weight: 400;
-	src: url('../fonts/PPNeueMontreal/PPNeueMontreal-Regular.woff2') format('woff2');
+	src: url('../fonts/Poppins/Poppins-Regular.ttf') format('truetype');
 }
 
 @font-face {
-	font-family: 'PPNeueMontreal';
+	font-family: 'Poppins';
 	font-style: normal;
 	font-weight: 500;
-	src: url('../fonts/PPNeueMontreal/PPNeueMontreal-Medium.woff2') format('woff2');
+	src: url('../fonts/Poppins/Poppins-Medium.ttf') format('truetype');
 }
 
 @font-face {
-	font-family: 'PPNeueMontreal';
+	font-family: 'Poppins';
+	font-style: normal;
+	font-weight: 600;
+	src: url('../fonts/Poppins/Poppins-SemiBold.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'Poppins';
 	font-style: normal;
 	font-weight: 700;
-	src: url('../fonts/PPNeueMontreal/PPNeueMontreal-Bold.woff2') format('woff2');
+	src: url('../fonts/Poppins/Poppins-Bold.ttf') format('truetype');
 }
 
 @font-face {
-	font-family: 'PPNeueMontreal';
+	font-family: 'Poppins';
+	font-style: normal;
+	font-weight: 800;
+	src: url('../fonts/Poppins/Poppins-ExtraBold.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'Poppins';
+	font-style: normal;
+	font-weight: 900;
+	src: url('../fonts/Poppins/Poppins-Black.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'Poppins';
 	font-style: italic;
 	font-weight: 100;
-	src: url('../fonts/PPNeueMontreal/PPNeueMontreal-Thinltalic.woff2') format('woff2');
+	src: url('../fonts/Poppins/Poppins-ThinItalic.ttf') format('truetype');
 }
 
 @font-face {
-	font-family: 'PPNeueMontreal';
+	font-family: 'Poppins';
+	font-style: italic;
+	font-weight: 200;
+	src: url('../fonts/Poppins/Poppins-ExtraLightItalic.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'Poppins';
+	font-style: italic;
+	font-weight: 300;
+	src: url('../fonts/Poppins/Poppins-LightItalic.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'Poppins';
 	font-style: italic;
 	font-weight: 400;
-	src: url('../fonts/PPNeueMontreal/PPNeueMontreal-Italic.woff2') format('woff2');
+	src: url('../fonts/Poppins/Poppins-Italic.ttf') format('truetype');
 }
 
 @font-face {
-	font-family: 'PPNeueMontreal';
+	font-family: 'Poppins';
+	font-style: italic;
+	font-weight: 500;
+	src: url('../fonts/Poppins/Poppins-MediumItalic.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'Poppins';
+	font-style: italic;
+	font-weight: 600;
+	src: url('../fonts/Poppins/Poppins-SemiBoldItalic.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'Poppins';
 	font-style: italic;
 	font-weight: 700;
-	src: url('../fonts/PPNeueMontreal/PPNeueMontreal-Boldltalic.woff2') format('woff2');
+	src: url('../fonts/Poppins/Poppins-BoldItalic.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'Poppins';
+	font-style: italic;
+	font-weight: 800;
+	src: url('../fonts/Poppins/Poppins-ExtraBoldItalic.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'Poppins';
+	font-style: italic;
+	font-weight: 900;
+	src: url('../fonts/Poppins/Poppins-BlackItalic.ttf') format('truetype');
 }
 
 html {
@@ -168,7 +159,7 @@ html {
 }
 
 body {
-	font: 400 100% 'PPNeueMontreal', sans-serif;
+	font: 400 100% 'Poppins', sans-serif;
 	color: var(--color-neutral-900);
 }
 
@@ -180,15 +171,18 @@ h5,
 h6 {
 	display: inline-block;
 	margin: 0;
-	font-family: 'PPEditorialNew', sans-serif;
 	color: var(--color-neutral-900);
+}
+
+h1 {
+	font-size: 40px;
 }
 
 button,
 input,
 select,
 textarea {
-	font: 400 1rem 'PPNeueMontreal', sans-serif;
+	font: 400 1rem 'Poppins', sans-serif;
 	color: var(--color-neutral-900);
 }
 
