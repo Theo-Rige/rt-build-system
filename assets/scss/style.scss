@@ -184,6 +184,7 @@ select,
 textarea {
 	font: 400 1rem 'Poppins', sans-serif;
 	color: var(--color-neutral-900);
+	transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 }
 
 button:hover:not(:disabled) {
