@@ -31,12 +31,18 @@ wp_head();
                     </div>
                     <?php foreach ($component::CODES as $key => $code) : ?>
                         <div id="code-tabs-<?= $key ?>-panel" class="tabs-panel">
-                            <?php $scriptPath = plugin_dir_path(dirname(__FILE__)) . 'components/' . $slug . '/' . $code['file'];
-                            if (file_exists($scriptPath)) : ?>
-                                <pre><code><?= trim(htmlspecialchars(file_get_contents($scriptPath))) ?></code></pre>
-                            <?php else : ?>
-                                <p><?= $code['label'] ?> file not found.</p>
-                            <?php endif; ?>
+                            <button type="button" class="copy">
+                                <?= Tool::loadSVG('copy') ?>
+                                <?= Tool::loadSVG('check') ?>
+                            </button>
+                            <div class="code" data-lang="<?= $code['lang'] ?>">
+                                <?php $scriptPath = plugin_dir_path(dirname(__FILE__)) . 'components/' . $slug . '/' . $code['file'];
+                                if (file_exists($scriptPath)) : ?>
+                                    <pre><code><?= trim(htmlspecialchars(file_get_contents($scriptPath))) ?></code></pre>
+                                <?php else : ?>
+                                    <p><?= $code['label'] ?> file not found.</p>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     <?php endforeach; ?>
                 </div>

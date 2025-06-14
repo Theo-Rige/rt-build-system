@@ -64,50 +64,51 @@ class Tabs {
 }
 
 const codeTabs = document.getElementById('code')
-const phpCodePanel = document.getElementById('code-tabs-php-panel')
-const jsCodePanel = document.getElementById('code-tabs-js-panel')
-const templateCodePanel = document.getElementById('code-tabs-template-panel')
 
-if (phpCodePanel) {
-	const code = phpCodePanel.querySelector('code')
+if (codeTabs) {
+	const codePanels = codeTabs.querySelectorAll('.tabs-panel')
 
-	if (code) {
-		phpCodePanel.innerHTML = await codeToHtml(code.textContent, {
-			lang: 'php',
-			theme: 'github-dark',
-			colorReplacements: {
-				'#24292e': '#181d27'
+	codePanels.forEach(async (panel) => {
+		const code = panel.querySelector('code')
+		if (!code) return
+
+		const copyButton = panel.querySelector('.copy')
+		const codeContainer = panel.querySelector('.code')
+
+		try {
+			const lang = codeContainer.dataset.lang || 'javascript'
+
+			const formattedCode = await codeToHtml(code.textContent, {
+				lang,
+				theme: 'github-dark',
+				colorReplacements: { '#24292e': '#181d27' }
+			})
+
+			if (codeContainer) codeContainer.innerHTML = formattedCode
+
+			if (copyButton) {
+				copyButton.addEventListener('click', async () => {
+					try {
+						await navigator.clipboard.writeText(code.textContent)
+						toggleButtonState(copyButton, 'copy--success')
+					} catch (error) {
+						console.error('Failed to copy:', error)
+						toggleButtonState(copyButton, 'copy--error')
+					}
+				})
 			}
-		})
-	}
+		} catch (error) {
+			console.error('Error processing code panel:', error)
+		}
+	})
+
+	new Tabs(codeTabs)
 }
 
-if (jsCodePanel) {
-	const code = jsCodePanel.querySelector('code')
+function toggleButtonState(button, className, duration = 2000) {
+	button.classList.add(className)
 
-	if (code) {
-		jsCodePanel.innerHTML = await codeToHtml(code.textContent, {
-			lang: 'js',
-			theme: 'github-dark',
-			colorReplacements: {
-				'#24292e': '#181d27'
-			}
-		})
-	}
+	setTimeout(() => {
+		button.classList.remove(className)
+	}, duration)
 }
-
-if (templateCodePanel) {
-	const code = templateCodePanel.querySelector('code')
-
-	if (code) {
-		templateCodePanel.innerHTML = await codeToHtml(code.textContent, {
-			lang: 'html',
-			theme: 'github-dark',
-			colorReplacements: {
-				'#24292e': '#181d27'
-			}
-		})
-	}
-}
-
-if (codeTabs) new Tabs(codeTabs)

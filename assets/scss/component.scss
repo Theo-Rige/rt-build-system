@@ -61,6 +61,46 @@ body.single-component {
 			}
 
 			.tabs-panel {
+				position: relative;
+
+				.copy {
+					position: absolute;
+					top: 16px;
+					right: 16px;
+					padding: 8px;
+					border: 0;
+					border-radius: 8px;
+					background: none;
+					color: var(--color-neutral-300);
+
+					.icon {
+						display: block;
+						transition: opacity 0.1s ease-in-out;
+
+						&--check {
+							position: absolute;
+							inset: 8px;
+							opacity: 0;
+						}
+					}
+
+					&:hover {
+						background: var(--color-neutral-800);
+					}
+
+					&--success {
+						.icon {
+							&--copy {
+								opacity: 0;
+							}
+
+							&--check {
+								opacity: 1;
+							}
+						}
+					}
+				}
+
 				pre {
 					margin: 0;
 					padding: 16px;
