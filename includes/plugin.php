@@ -88,18 +88,25 @@ class Plugin {
     /**
      * Creates existing component posts for components already defined in the components directory.
      * 
+     * We couldn't use current component detection because AJAX URI requests don't have any information about the current component.
+     * 
      * @return void
      */
     public static function createExistingComponentsPosts() {
         $components = glob(RTBS_PLUGIN_DIR . 'components/*', GLOB_ONLYDIR);
+
         foreach ($components as $componentDir) {
             $componentName = basename($componentDir);
             $existingPost = get_page_by_path($componentName, OBJECT, self::COMPONENT_POST_TYPE);
+            $description = '';
 
             if (!$existingPost) {
+                $descriptionFile = $componentDir . '/description.html';
+                if (file_exists($descriptionFile)) $description = file_get_contents($descriptionFile);
+
                 $postData = [
                     'post_title' => ucfirst($componentName),
-                    'post_content' => '',
+                    'post_content' => $description,
                     'post_status' => 'publish',
                     'post_type' => self::COMPONENT_POST_TYPE,
                     'post_name' => $componentName,
