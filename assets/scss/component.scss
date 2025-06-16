@@ -3,7 +3,15 @@ body.single-component {
 		max-width: var(--main-width);
 		margin: 80px auto;
 
+		.actions {
+			display: flex;
+			gap: 16px;
+		}
+
 		section {
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
 			margin-top: 40px;
 
 			h2 {
@@ -12,14 +20,61 @@ body.single-component {
 			}
 		}
 
-		#preview {
+		.preview {
+			position: relative;
 			resize: horizontal;
 			max-width: calc(100% - 48px);
-			margin: 0 auto;
+			margin-right: auto;
+			margin-left: auto;
 			overflow: hidden;
 			padding: 24px;
 			border-radius: 8px;
 			background: var(--color-neutral-100);
+
+			&__expand {
+				position: absolute;
+				top: 16px;
+				right: 16px;
+				padding: 8px;
+				border: 0;
+				border-radius: 8px;
+				background: none;
+				color: var(--color-neutral-700);
+
+				.icon {
+					display: block;
+					transition: opacity 0.1s ease-in-out;
+
+					&--collapse {
+						position: absolute;
+						inset: 8px;
+						opacity: 0;
+					}
+				}
+
+				&:hover {
+					background: var(--color-neutral-300);
+				}
+			}
+
+			&--expanded {
+				position: absolute;
+				height: 100dvh;
+				width: 100dvw;
+				inset: 0;
+				z-index: 1;
+
+				.preview__expand {
+					.icon {
+						&--expand {
+							opacity: 0;
+						}
+						&--collapse {
+							opacity: 1;
+						}
+					}
+				}
+			}
 		}
 
 		.tabs#code {
@@ -110,5 +165,9 @@ body.single-component {
 				}
 			}
 		}
+	}
+
+	&:has(#preview.preview--expanded) {
+		overflow: hidden;
 	}
 }

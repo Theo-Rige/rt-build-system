@@ -44,6 +44,12 @@ class Component {
         ]
     ];
 
+    /**
+     * Get component class by slug.
+     *
+     * @param string $slug Component slug.
+     * @return string|null Component class name or null if not found.
+     */
     public static function getComponentClass($slug) {
         $className = 'RTBS\\' . str_replace('-', '', ucwords($slug, '-'));
 
@@ -59,6 +65,14 @@ class Component {
     public static function init() {
         add_action('wp_enqueue_scripts', [static::class, 'enqueueAssets']);
         add_filter('script_loader_tag', [static::class, 'addModuleType'], 10, 3);
+    }
+
+    /**
+     * Register AJAX actions for the component.
+     */
+    public static function registerAjaxActions() {
+        add_action('wp_ajax_rtbs_download_zip', [self::class, 'downloadZip']);
+        add_action('wp_ajax_nopriv_rtbs_download_zip', [self::class, 'downloadZip']);
     }
 
     /**
@@ -80,14 +94,14 @@ class Component {
         $name = static::getName();
 
         foreach ($wp_scripts->queue as $handle) {
-            if (preg_match('rtbs', $handle)) continue;
+            if (preg_match('#rtbs#', $handle)) continue;
 
             wp_dequeue_script($handle);
             wp_deregister_script($handle);
         }
 
         foreach ($wp_styles->queue as $handle) {
-            if (preg_match('rtbs', $handle)) continue;
+            if (preg_match('#rtbs#', $handle)) continue;
 
             wp_dequeue_style($handle);
             wp_deregister_style($handle);
@@ -96,6 +110,11 @@ class Component {
         wp_enqueue_script('rtbs-component-script', RTBS_PLUGIN_URL . 'assets/js/component.min.js', [], RTBS_PLUGIN_VERSION, true);
         wp_enqueue_style('rtbs-component-style', RTBS_PLUGIN_URL . 'assets/css/component.min.css', [], RTBS_PLUGIN_VERSION);
         wp_enqueue_style('rtbs-style', RTBS_PLUGIN_URL . 'assets/css/style.min.css', [], RTBS_PLUGIN_VERSION);
+
+        wp_localize_script('rtbs-component-script', 'RTBS', [
+            'ajaxUrl' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('rtbs_nonce')
+        ]);
 
         $scriptPath = self::getComponentPath($name, 'script.js');
         $stylePath = self::getComponentPath($name, 'style.css');
@@ -178,5 +197,56 @@ class Component {
         ob_start();
         include $templatePath;
         return ob_get_clean();
+    }
+
+    /**
+     * Download component as ZIP file.
+     *
+     * @return void
+     */
+    public static function downloadZip() {
+        if (!isset($_GET['slug'])) {
+            http_response_code(400);
+            exit('Missing slug');
+        }
+
+        $slug = sanitize_text_field($_GET['slug']);
+        $component_dir = RTBS_PLUGIN_DIR . 'components/' . $slug . '/';
+
+        if (!is_dir($component_dir)) {
+            http_response_code(404);
+            exit('Component not found');
+        }
+
+        $zip_name = $slug . '-' . time() . '.zip';
+        $zip_path = sys_get_temp_dir() . '/' . $zip_name;
+
+        $zip = new \ZipArchive();
+        if ($zip->open($zip_path, \ZipArchive::CREATE) !== true) {
+            http_response_code(500);
+            exit('Could not create ZIP');
+        }
+
+        $files = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($component_dir),
+            \RecursiveIteratorIterator::LEAVES_ONLY
+        );
+
+        foreach ($files as $name => $file) {
+            if (!$file->isDir()) {
+                $filePath = $file->getRealPath();
+                $relativePath = substr($filePath, strlen($component_dir));
+                $zip->addFile($filePath, $relativePath);
+            }
+        }
+
+        $zip->close();
+
+        header('Content-Type: application/zip');
+        header('Content-Disposition: attachment; filename="' . basename($zip_path) . '"');
+        header('Content-Length: ' . filesize($zip_path));
+        readfile($zip_path);
+        unlink($zip_path);
+        exit;
     }
 }

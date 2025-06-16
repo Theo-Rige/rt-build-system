@@ -63,7 +63,43 @@ class Tabs {
 	}
 }
 
+const preview = document.getElementById('preview')
+const previewExpandButton = document.querySelector('#preview .preview__expand')
+const copyDesignButton = document.querySelector('.rtbs-button--copy-design')
 const codeTabs = document.getElementById('code')
+
+if (preview && previewExpandButton) {
+	previewExpandButton.addEventListener('click', () => {
+		preview.classList.toggle('preview--expanded')
+	})
+}
+
+if (copyDesignButton) {
+	copyDesignButton.addEventListener('click', async () => {
+		const componentHTML = preview.innerHTML
+		const response = await fetch('https://api.to.design/html', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: 'Bearer zpka_4c3accd44d2e4c36911c7ab921e46f74_26e07eb8'
+			},
+			body: JSON.stringify({ html: componentHTML, clip: true })
+		})
+		if (response.ok) {
+			const clipboardDataFromAPI = await response.text()
+			try {
+				await navigator.clipboard.writeText(clipboardDataFromAPI)
+				toggleButtonState(copyDesignButton, 'copy--success')
+			} catch (error) {
+				console.error('Failed to copy to clipboard:', error)
+				toggleButtonState(copyDesignButton, 'copy--error')
+			}
+		} else {
+			console.error('Failed to fetch clipboard data from API:', response.statusText)
+			toggleButtonState(copyDesignButton, 'copy--error')
+		}
+	})
+}
 
 if (codeTabs) {
 	const codePanels = codeTabs.querySelectorAll('.tabs-panel')
@@ -77,7 +113,6 @@ if (codeTabs) {
 
 		try {
 			const lang = codeContainer.dataset.lang || 'javascript'
-
 			const formattedCode = await codeToHtml(code.textContent, {
 				lang,
 				theme: 'github-dark',

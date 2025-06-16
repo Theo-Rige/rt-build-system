@@ -17,9 +17,20 @@ wp_head();
         <article>
             <h1><?= get_the_title() ?></h1>
             <p><?= get_the_content() ?></p>
-            <div id="preview">
-                <?= $component::loadTemplate() ?>
+            <div class="actions">
+                <a href="<?= admin_url('admin-ajax.php') . '?action=rtbs_download_zip&slug=' . $slug ?>" class="rtbs-button rtbs-button--secondary rtbs-button--download" download><?= __('Download ZIP folder', 'rt-build-system') ?></a>
+                <button type="button" class="rtbs-button rtbs-button--secondary rtbs-button--copy-design">
+                    <?= Tool::loadSVG('figma') ?>
+                    <?= __('Get design', 'rt-build-system') ?>
+                </button>
             </div>
+            <section id="preview" class="preview">
+                <button type="button" class="preview__expand" aria-label="<?= __('Expand preview', 'rt-build-system') ?>">
+                    <?= Tool::loadSVG('expand') ?>
+                    <?= Tool::loadSVG('collapse') ?>
+                </button>
+                <?= $component::loadTemplate() ?>
+            </section>
             <section>
                 <h2>Code</h2>
                 <div id="code" class="tabs">
@@ -31,7 +42,7 @@ wp_head();
                     </div>
                     <?php foreach ($component::CODES as $key => $code) : ?>
                         <div id="code-tabs-<?= $key ?>-panel" class="tabs-panel">
-                            <button type="button" class="copy">
+                            <button type="button" class="copy" aria-label="<?= __('Copy code', 'rt-build-system') ?>">
                                 <?= Tool::loadSVG('copy') ?>
                                 <?= Tool::loadSVG('check') ?>
                             </button>
