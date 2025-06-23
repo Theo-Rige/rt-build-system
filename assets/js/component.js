@@ -70,6 +70,7 @@ const codeTabs = document.getElementById('code')
 
 if (preview && previewExpandButton) {
 	previewExpandButton.addEventListener('click', () => {
+		preview.removeAttribute('style')
 		preview.classList.toggle('preview--expanded')
 	})
 }
