@@ -1,0 +1,47 @@
+#search-engine-component {
+	container: rtbs-search-engine / inline-size;
+}
+
+#search-engine-filters {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	margin-block-end: 40px;
+
+	.rtbs-label {
+		flex: 1;
+	}
+}
+
+#search-engine-results {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	gap: 16px;
+}
+
+.post-card {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	outline: none;
+	text-decoration: none;
+
+	.post-card__thumbnail {
+		width: 100%;
+		object-fit: cover;
+		border-radius: 16px;
+	}
+
+	.post-card__title {
+		color: var(--color-neutral-900);
+		font-size: 1.25rem;
+		font-weight: 500;
+	}
+}
+
+@container rtbs-search-engine (min-width: 600px) {
+	#search-engine-filters {
+		flex-direction: row;
+		align-items: flex-end;
+	}
+}

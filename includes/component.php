@@ -37,6 +37,11 @@ class Component {
             'file' => 'template.php',
             'lang' => 'html'
         ],
+        'style' => [
+            'label' => 'CSS',
+            'file' => 'style.css',
+            'lang' => 'css'
+        ],
         'js' => [
             'label' => 'JavaScript',
             'file' => 'script.js',
