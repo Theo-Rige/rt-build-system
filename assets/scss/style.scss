@@ -191,14 +191,20 @@ button:hover:not(:disabled) {
 	cursor: pointer;
 }
 
-.rtbs-button {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	gap: 8px;
-	padding: 10px 16px;
+.rtbs-label {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	font: 500 0.875rem/20px 'Poppins', sans-serif;
+	color: var(--color-neutral-700);
+}
+
+.rtbs-button,
+.rtbs-select,
+.rtbs-input {
 	font: 500 0.875rem/20px 'Poppins', sans-serif;
 	text-decoration: none;
+	border: none;
 	border-radius: 8px;
 	box-shadow: 0 1px 1px 0.5px rgb(from var(--color-neutral-900) r g b / 0.04),
 		0 3px 3px -1.5px rgb(from var(--color-neutral-900) r g b / 0.02),
@@ -208,6 +214,15 @@ button:hover:not(:disabled) {
 		0 48px 48px -24px rgb(from var(--color-neutral-900) r g b / 0.04),
 		0 0 0 1px rgb(from var(--color-neutral-900) r g b / 0.1),
 		inset 0 -1px 1px -0.5px rgb(from var(--color-neutral-900) r g b / 0.06);
+}
+
+.rtbs-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 10px 16px;
+	transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 
 	svg {
 		display: block;
@@ -215,13 +230,62 @@ button:hover:not(:disabled) {
 		height: 20px;
 	}
 
-	&:has(svg) {
+	&:has(svg):not(.rtbs-button--icon) {
 		padding: 10px 16px 10px 12px;
 	}
 
 	&--secondary {
-		color: var(--color-neutral-900);
-		border: none;
-		background-image: linear-gradient(to bottom, var(--color-neutral-50), var(--color-neutral-100));
+		color: var(--color-neutral-700);
+		background-color: var(--color-neutral-50);
+
+		&:hover {
+			color: var(--color-neutral-900);
+			background-color: var(--color-neutral-100);
+		}
 	}
+
+	&--icon {
+		padding: 10px;
+	}
+}
+
+.rtbs-select {
+	padding: 10px 12px 10px 16px;
+	color: var(--color-neutral-900);
+	background-color: var(--color-neutral-00);
+
+	&,
+	&::picker(select) {
+		appearance: base-select;
+	}
+
+	button {
+		selectedcontent {
+			flex: 1;
+			font: 500 0.875rem/20px 'Poppins', sans-serif;
+			color: var(--color-neutral-900);
+		}
+
+		svg {
+			display: block;
+			width: 20px;
+			height: 20px;
+			margin-left: 24px;
+			transition: transform 0.2s ease-in-out;
+		}
+	}
+
+	&:open > button svg {
+		transform: rotate(180deg);
+	}
+
+	&::picker-icon {
+		display: none;
+	}
+}
+
+.rtbs-input {
+	padding: 10px 16px;
+	color: var(--color-neutral-900);
+	background-color: var(--color-neutral-00);
 }

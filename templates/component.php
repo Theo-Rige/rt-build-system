@@ -25,7 +25,7 @@ wp_head();
                 </button>
             </div>
             <section id="preview" class="preview">
-                <button type="button" class="preview__expand" aria-label="<?= __('Expand preview', 'rt-build-system') ?>">
+                <button type="button" class="rtbs-button rtbs-button--secondary rtbs-button--icon preview__expand" aria-label="<?= __('Expand preview', 'rt-build-system') ?>">
                     <?= Tool::loadSVG('expand') ?>
                     <?= Tool::loadSVG('collapse') ?>
                 </button>
