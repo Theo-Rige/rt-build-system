@@ -98,14 +98,26 @@ class Plugin {
         foreach ($components as $componentDir) {
             $componentName = basename($componentDir);
             $existingPost = get_page_by_path($componentName, OBJECT, self::COMPONENT_POST_TYPE);
-            $description = '';
+            $title = ucfirst($componentName);
+            $description = sprintf(__('This is the %s component.', 'rt-build-system'), ucfirst($componentName));
+            $thumbnail = null;
 
             if (!$existingPost) {
-                $descriptionFile = $componentDir . '/description.html';
-                if (file_exists($descriptionFile)) $description = file_get_contents($descriptionFile);
+                $xmlFile = $componentDir . '/component.xml';
+
+                if (file_exists($xmlFile)) {
+                    $xml = simplexml_load_file($xmlFile);
+
+                    if ($xml) {
+                        if (isset($xml->title)) $title = (string)$xml->title;
+                        if (isset($xml->description)) $description = (string)$xml->description;
+                    } else {
+                        error_log("Failed to load XML file: $xmlFile");
+                    }
+                }
 
                 $postData = [
-                    'post_title' => ucfirst($componentName),
+                    'post_title' => $title,
                     'post_content' => $description,
                     'post_status' => 'publish',
                     'post_type' => self::COMPONENT_POST_TYPE,
@@ -113,7 +125,6 @@ class Plugin {
                 ];
                 $postID = wp_insert_post($postData);
 
-                $thumbnail = null;
                 foreach (['jpg', 'jpeg', 'png', 'gif', 'webp'] as $ext) {
                     $candidate = $componentDir . "/thumbnail.$ext";
                     if (file_exists($candidate)) {
@@ -121,6 +132,7 @@ class Plugin {
                         break;
                     }
                 }
+
                 if ($thumbnail && $postID) {
                     $uploadDir = wp_upload_dir();
                     $filename = basename($thumbnail);

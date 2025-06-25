@@ -1,0 +1,19 @@
+<component>
+    <name>Moteur de recherche</name>
+    <description>
+        Un moteur de recherche avec des filtres basés sur les tags et les catégories.<br />
+        Il supporte :
+        <ul>
+	        <li>Filtre par mots-clés</li>
+	        <li>Chargement infini ou pagination</li>
+	        <li>Filtres en haut ou sur le côté</li>
+        </ul>
+    </description>
+    <libraries>
+        <library>
+            <name>Embla Carousel</name>
+            <version>6.0.0</version>
+            <repository>https://github.com/davidjbradshaw/embla-carousel</repository>
+        </library>
+    </libraries>
+</component>
