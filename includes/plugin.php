@@ -76,7 +76,7 @@ class Plugin {
                 'view_items' => __('View components', 'rt-build-system'),
                 'search_items' => __('Search components', 'rt-build-system'),
                 'not_found' => __('No components found', 'rt-build-system'),
-                'not_found_in_trash' => __('No components found in Trash', 'rt-build-system'),
+                'not_found_in_trash' => __('No components found in trash', 'rt-build-system'),
             ],
             'public' => true,
             'has_archive' => 'components',

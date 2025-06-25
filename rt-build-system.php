@@ -1,14 +1,15 @@
 <?php
 /*
 Plugin Name: Build System
-Plugin URI: https://github.com/Theo-Rige/wp-plugin-template
+Plugin URI: https://github.com/Theo-Rige/wp-build-system
 Description: A simple WordPress plugin for building web systems.
-Text Domain: rt-plugin-template
 Version: 0.1.0
 Author: Theo Rige
 Author URI: rigetheo.netlify.app
 Developer: Theo Rige
 Developer URI: rigetheo.netlify.app
+Text Domain: rt-build-system
+Domain Path: /languages
 */
 
 use RTBS\Plugin;
