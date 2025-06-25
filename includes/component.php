@@ -90,6 +90,28 @@ class Component {
     }
 
     /**
+     * Helper to get component path.
+     *
+     * @param string $name Component name.
+     * @param string $file File name.
+     * @return string Full path to component file.
+     */
+    protected static function getComponentPath($name, $file = '') {
+        return plugin_dir_path(dirname(__FILE__)) . 'components/' . $name . '/' . $file;
+    }
+
+    /**
+     * Helper to get component URL.
+     *
+     * @param string $name Component name.
+     * @param string $file File name.
+     * @return string Full URL to component file.
+     */
+    protected static function getComponentUrl($name, $file = '') {
+        return plugin_dir_url(dirname(__FILE__)) . 'components/' . $name . '/' . $file;
+    }
+
+    /**
      * Enqueue component scripts and styles.
      */
     public static function enqueueAssets() {
@@ -154,28 +176,6 @@ class Component {
         }
 
         return $tag;
-    }
-
-    /**
-     * Helper to get component path.
-     *
-     * @param string $name Component name.
-     * @param string $file File name.
-     * @return string Full path to component file.
-     */
-    protected static function getComponentPath($name, $file = '') {
-        return plugin_dir_path(dirname(__FILE__)) . 'components/' . $name . '/' . $file;
-    }
-
-    /**
-     * Helper to get component URL.
-     *
-     * @param string $name Component name.
-     * @param string $file File name.
-     * @return string Full URL to component file.
-     */
-    protected static function getComponentUrl($name, $file = '') {
-        return plugin_dir_url(dirname(__FILE__)) . 'components/' . $name . '/' . $file;
     }
 
     /**
