@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Build System\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-25 21:19+0000\n"
-"PO-Revision-Date: 2025-06-25 22:42+0000\n"
+"PO-Revision-Date: 2025-06-28 20:24+0000\n"
 "Last-Translator: \n"
 "Language-Team: Français\n"
 "Language: fr_FR\n"
@@ -39,19 +39,27 @@ msgstr "Tous les tags"
 msgid "Build System"
 msgstr "Build System"
 
+#: templates/component.php:70
+msgid "Code"
+msgstr "Code"
+
 #: includes/plugin.php:70
 msgid "Component"
 msgstr "Composant"
 
-#: includes/admin.php:27 includes/admin.php:28 includes/plugin.php:69
+#: includes/admin.php:28 includes/admin.php:29 includes/plugin.php:69
 msgid "Components"
 msgstr "Composants"
 
-#: templates/component.php:45
+#: templates/component.php:80
 msgid "Copy code"
 msgstr "Copier le code"
 
-#: templates/component.php:21
+#: templates/libraries.php:17
+msgid "Date of last release"
+msgstr "Date de dernière mise à jour"
+
+#: templates/component.php:24
 msgid "Download ZIP folder"
 msgstr "Télécharger le dossier ZIP"
 
@@ -63,11 +71,11 @@ msgstr "Modifier le composant"
 msgid "Edit tag"
 msgstr "Modifier le tag"
 
-#: templates/component.php:28
+#: templates/component.php:31
 msgid "Expand preview"
 msgstr "Agrandir l'aperçu"
 
-#: templates/component.php:24
+#: templates/component.php:27
 msgid "Get design"
 msgstr "Voir le design"
 
@@ -79,17 +87,13 @@ msgstr "https://github.com/Theo-Rige/wp-build-system"
 msgid "Keywords"
 msgstr "Mots clés"
 
-#: includes/admin.php:43
+#: includes/admin.php:54 templates/component.php:38
 msgid "Libraries"
 msgstr "Librairies"
 
-#: templates/libraries.php:1
-msgid "Library Name"
-msgstr "Nom de la librairie"
-
-#: templates/libraries.php:4
-msgid "Library Repository"
-msgstr "Dépôt de la librairie"
+#: templates/libraries.php:9
+msgid "Name"
+msgstr "Nom"
 
 #: includes/plugin.php:74
 msgid "New component"
@@ -107,9 +111,21 @@ msgstr "Aucun composant trouvé"
 msgid "No components found in trash"
 msgstr "Aucun composant n'a été trouvé dans la poubelle"
 
+#: templates/libraries.php:21
+msgid "No data"
+msgstr "Aucune donnée"
+
 #: components/search-engine/template.php:40
 msgid "No results found."
 msgstr "Aucun résultat n'a été trouvé."
+
+#: includes/admin.php:55 templates/component.php:97
+msgid "References"
+msgstr "Références"
+
+#: templates/libraries.php:13
+msgid "Repository"
+msgstr "Dépôt"
 
 #: components/search-engine/template.php:32
 msgid "Reset"
@@ -148,9 +164,30 @@ msgstr "Tags"
 msgid "Theo Rige"
 msgstr "Théo Rigé"
 
+#: templates/component.php:100
+msgid "This component does not have any references."
+msgstr "Ce composant n'a pas de références."
+
+#: templates/component.php:41
+msgid "This component does not use any libraries."
+msgstr "Ce composant n'utilise aucune librairies."
+
+#: includes/plugin.php:102
+#, php-format
+msgid "This is the %s component."
+msgstr "C'est le composant %s."
+
+#: templates/references.php:4
+msgid "Title"
+msgstr "Titre"
+
 #: includes/plugin.php:56
 msgid "Update tag"
 msgstr "Mettre à jour le tag"
+
+#: templates/references.php:8
+msgid "URL"
+msgstr "URL"
 
 #: includes/plugin.php:75
 msgid "View component"
@@ -159,3 +196,7 @@ msgstr "Voir le composant"
 #: includes/plugin.php:76
 msgid "View components"
 msgstr "Voir les composants"
+
+#: templates/component.php:46
+msgid "View on GitHub"
+msgstr "Voir sur GitHub"
