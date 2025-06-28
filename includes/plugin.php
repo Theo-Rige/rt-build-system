@@ -37,7 +37,7 @@ class Plugin {
      * @return void
      */
     private static function loadTextDomain() {
-        load_plugin_textdomain(RTBS_PLUGIN_DOMAIN, false, dirname(plugin_basename(__FILE__)) . '/languages');
+        load_plugin_textdomain('rt-build-system', false, dirname(plugin_basename(__FILE__)) . '/languages');
     }
 
     /**
