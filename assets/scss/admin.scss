@@ -1,0 +1,63 @@
+#rtbs_component_libraries {
+	.inside {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr) auto;
+		row-gap: 16px;
+		column-gap: 12px;
+		margin-top: 8px;
+
+		.rtbs-library {
+			display: contents;
+
+			label {
+				position: relative;
+				display: flex;
+				flex-direction: column;
+				gap: 8px;
+				flex: 1;
+
+				input {
+					margin: 0;
+				}
+			}
+
+			.rtbs-library-date {
+				.icon {
+					display: block;
+					position: absolute;
+					left: 3px;
+					bottom: 3px;
+
+					&_shade {
+						opacity: 0.3;
+					}
+
+					&--exclamation,
+					&--cross {
+						display: none;
+					}
+				}
+
+				input {
+					padding-left: 30px;
+				}
+
+				&--warning {
+					border-color: #f0ad4e;
+
+					.icon--exclamation {
+						display: block;
+					}
+				}
+
+				&--danger {
+					border-color: #d9534f;
+
+					.icon--cross {
+						display: block;
+					}
+				}
+			}
+		}
+	}
+}

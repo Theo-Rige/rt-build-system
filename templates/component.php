@@ -31,8 +31,36 @@ wp_head();
                 </button>
                 <?= $component::loadTemplate() ?>
             </section>
+            <section id="libraries">
+                <h2><?= __('Libraries', 'rt-build-system') ?></h2>
+                <div class="libraries-list">
+                    <?php foreach ($component::getLibraries() as $library) : ?>
+                        <div class="library">
+                            <h3><?= esc_html($library['name']) ?></h3>
+                            <a href="<?= esc_url($library['repository']) ?>" target="_blank"><?= __('View on GitHub', 'rt-build-system') ?></a>
+                            <span>
+                                <?php
+                                // based on the date show the right icon if it more than 6 months or a year old
+                                $date = strtotime($library['date']);
+                                $currentDate = time();
+                                $sixMonthsAgo = strtotime('-6 months', $currentDate);
+                                $oneYearAgo = strtotime('-1 year', $currentDate);
+                                if ($date < $oneYearAgo) {
+                                    echo Tool::loadSVG('cross');
+                                } elseif ($date < $sixMonthsAgo) {
+                                    echo Tool::loadSVG('exclamation');
+                                } else {
+                                    echo Tool::loadSVG('checkmark');
+                                }
+                                ?>
+                                <?= esc_html($library['date']) ?>
+                            </span>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </section>
             <section>
-                <h2>Code</h2>
+                <h2><?= __('Code', 'rt-build-system') ?></h2>
                 <div id="code" class="tabs">
                     <div class="tabs-list">
                         <?php foreach ($component::CODES as $key => $code) : ?>

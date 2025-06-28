@@ -137,6 +137,7 @@ class Component {
         wp_enqueue_script('rtbs-component-script', RTBS_PLUGIN_URL . 'assets/js/component.min.js', [], RTBS_PLUGIN_VERSION, true);
         wp_enqueue_style('rtbs-component-style', RTBS_PLUGIN_URL . 'assets/css/component.min.css', [], RTBS_PLUGIN_VERSION);
         wp_enqueue_style('rtbs-style', RTBS_PLUGIN_URL . 'assets/css/style.min.css', [], RTBS_PLUGIN_VERSION);
+        wp_enqueue_style('rtbs-unstyle', RTBS_PLUGIN_URL . 'assets/css/unstyle.min.css', [], RTBS_PLUGIN_VERSION);
 
         wp_localize_script('rtbs-component-script', 'RTBS', [
             'ajaxUrl' => admin_url('admin-ajax.php'),
@@ -202,6 +203,14 @@ class Component {
         ob_start();
         include $templatePath;
         return ob_get_clean();
+    }
+
+    /**
+     * Get component libraries.
+     *
+     */
+    public static function getLibraries() {
+        return get_post_meta(get_the_ID(), 'rtbs_libraries', true) ?: [];
     }
 
     /**
