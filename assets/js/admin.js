@@ -60,87 +60,112 @@ async function getLatestReleaseDate(entry, repositoryInput) {
 	}
 }
 
-librariesEntries.forEach((entry, index) => {
+function getNextEntryIndex(container, itemSelector) {
+	const allEntries = container.querySelectorAll(itemSelector)
+	return allEntries.length
+}
+
+function updateEntryAttributes(entry, index, fieldPrefix) {
+	const inputs = entry.querySelectorAll('input')
+	const labels = entry.querySelectorAll('label')
+
+	inputs.forEach((input) => {
+		if (input.name && input.name.includes(`${fieldPrefix}[`)) {
+			const fieldName = input.name.match(/\[([^\]]+)\]$/)?.[1]
+			if (fieldName) {
+				input.name = `${fieldPrefix}[${index}][${fieldName}]`
+				input.id = `${fieldPrefix}[${index}][${fieldName}]`
+			}
+		}
+	})
+
+	labels.forEach((label) => {
+		if (label.getAttribute('for') && label.getAttribute('for').includes(`${fieldPrefix}[`)) {
+			const fieldName = label.getAttribute('for').match(/\[([^\]]+)\]$/)?.[1]
+			if (fieldName) {
+				label.setAttribute('for', `${fieldPrefix}[${index}][${fieldName}]`)
+			}
+		}
+	})
+}
+
+function addRepeatedEntryLogic(entry, container, itemSelector, fieldPrefix, emptyEntryNode) {
+	const entryInputs = entry.querySelectorAll('input')
 	const repositoryInput = entry.querySelector('input[name*="[repository]"]')
 
-	if (repositoryInput) getLatestReleaseDate(entry, repositoryInput)
+	if (repositoryInput) {
+		repositoryInput.addEventListener('blur', () => {
+			console.log(`Fetching latest release date for repository: ${repositoryInput.value}`)
+			getLatestReleaseDate(entry, repositoryInput)
+		})
+	}
+
+	entry.addEventListener('input', () => {
+		const lastEntryIsValid = Array.from(entryInputs).every(
+			(input) => input.readOnly || (input.checkValidity() && input.value.length > 0)
+		)
+
+		if (lastEntryIsValid) {
+			const allEntries = container.querySelectorAll(itemSelector)
+			const lastEntry = allEntries[allEntries.length - 1]
+
+			if (lastEntry === entry) {
+				const newEntry = emptyEntryNode.cloneNode(true)
+				const nextIndex = getNextEntryIndex(container, itemSelector)
+				updateEntryAttributes(newEntry, nextIndex, fieldPrefix)
+				newEntry.querySelectorAll('input').forEach((input) => (input.value = ''))
+				container.appendChild(newEntry)
+				addRepeatedEntryLogic(newEntry, container, itemSelector, fieldPrefix, emptyEntryNode)
+			}
+		} else {
+			const lastEntry = container.querySelector(`${itemSelector}:last-child`)
+			if (lastEntry && lastEntry !== entry) {
+				const allInputsEmpty = Array.from(lastEntry.querySelectorAll('input')).every(
+					(input) => input.value.length === 0
+				)
+
+				if (allInputsEmpty) {
+					lastEntry.remove()
+				}
+			}
+		}
+	})
+}
+
+function initializeRepeatedFields(config) {
+	const { containerSelector, itemSelector, fieldPrefix } = config
+
+	const container = document.querySelector(`${containerSelector} .inside`)
+	if (!container) return
+
+	const entries = container.querySelectorAll(itemSelector)
+	const emptyEntry = container.querySelector(`${itemSelector}:last-child`)
+
+	// Initialize existing entries for repository fetching
+	entries.forEach((entry) => {
+		const repositoryInput = entry.querySelector('input[name*="[repository]"]')
+		if (repositoryInput) {
+			getLatestReleaseDate(entry, repositoryInput)
+		}
+	})
+
+	// Set up repeatable logic for the last entry
+	if (emptyEntry) {
+		const emptyEntryNode = emptyEntry.cloneNode(true)
+		addRepeatedEntryLogic(emptyEntry, container, itemSelector, fieldPrefix, emptyEntryNode)
+	}
+}
+
+// Initialize libraries metabox
+initializeRepeatedFields({
+	containerSelector: '#rtbs_component_libraries',
+	itemSelector: '.rtbs-postbox-item--library',
+	fieldPrefix: 'rtbs_libraries'
 })
 
-if (librariesEmptyEntry) {
-	const librariesEmptyEntryNode = librariesEmptyEntry.cloneNode(true)
-
-	function getNextEntryIndex() {
-		const allEntries = document.querySelectorAll('#rtbs_component_libraries .rtbs-library')
-		return allEntries.length
-	}
-
-	function updateEntryAttributes(entry, index) {
-		const inputs = entry.querySelectorAll('input')
-		const labels = entry.querySelectorAll('label')
-
-		inputs.forEach((input) => {
-			if (input.name && input.name.includes('rtbs_libraries[')) {
-				const fieldName = input.name.match(/\[([^\]]+)\]$/)?.[1]
-				if (fieldName) {
-					input.name = `rtbs_libraries[${index}][${fieldName}]`
-					input.id = `rtbs_libraries[${index}][${fieldName}]`
-				}
-			}
-		})
-
-		labels.forEach((label) => {
-			if (label.getAttribute('for') && label.getAttribute('for').includes('rtbs_libraries[')) {
-				const fieldName = label.getAttribute('for').match(/\[([^\]]+)\]$/)?.[1]
-				if (fieldName) {
-					label.setAttribute('for', `rtbs_libraries[${index}][${fieldName}]`)
-				}
-			}
-		})
-	}
-
-	function addLastRepeatedEntryLogic(entry) {
-		const entryInputs = entry.querySelectorAll('input')
-		const repositoryInput = entry.querySelector('input[name*="[repository]"]')
-
-		if (repositoryInput) {
-			repositoryInput.addEventListener('blur', () => {
-				console.log(`Fetching latest release date for repository: ${repositoryInput.value}`)
-
-				getLatestReleaseDate(entry, repositoryInput)
-			})
-		}
-
-		entry.addEventListener('input', () => {
-			const lastEntryIsValid = Array.from(entryInputs).every(
-				(input) => input.checkValidity() && input.value.length > 0
-			)
-
-			if (lastEntryIsValid) {
-				const allEntries = entry.parentNode.querySelectorAll('.rtbs-library')
-				const lastEntry = allEntries[allEntries.length - 1]
-
-				if (lastEntry === entry) {
-					const newEntry = librariesEmptyEntryNode.cloneNode(true)
-					const nextIndex = getNextEntryIndex()
-					updateEntryAttributes(newEntry, nextIndex)
-					newEntry.querySelectorAll('input').forEach((input) => (input.value = ''))
-					entry.parentNode.appendChild(newEntry)
-					addLastRepeatedEntryLogic(newEntry)
-				}
-			} else {
-				const newEntry = entry.parentNode.querySelector('.rtbs-library:last-child')
-				if (newEntry && newEntry !== entry) {
-					const allInputsEmpty = Array.from(newEntry.querySelectorAll('input')).every(
-						(input) => input.value.length === 0
-					)
-
-					if (allInputsEmpty) {
-						newEntry.remove()
-					}
-				}
-			}
-		})
-	}
-
-	addLastRepeatedEntryLogic(librariesEmptyEntry)
-}
+// Initialize references metabox
+initializeRepeatedFields({
+	containerSelector: '#rtbs_component_references',
+	itemSelector: '.rtbs-postbox-item--reference',
+	fieldPrefix: 'rtbs_references'
+})

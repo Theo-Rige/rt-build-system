@@ -214,6 +214,14 @@ class Component {
     }
 
     /**
+     * Get component references.
+     *
+     */
+    public static function getReferences() {
+        return get_post_meta(get_the_ID(), 'rtbs_references', true) ?: [];
+    }
+
+    /**
      * Download component as ZIP file.
      *
      * @return void

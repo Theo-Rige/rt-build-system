@@ -1,12 +1,10 @@
-#rtbs_component_libraries {
+#postbox-container-2 .postbox {
 	.inside {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr) auto;
 		row-gap: 16px;
 		column-gap: 12px;
 		margin-top: 8px;
 
-		.rtbs-library {
+		.rtbs-postbox-item {
 			display: contents;
 
 			label {
@@ -59,5 +57,17 @@
 				}
 			}
 		}
+	}
+
+	&#rtbs_component_libraries .inside {
+		grid-template-columns: repeat(2, 1fr) auto;
+	}
+
+	&#rtbs_component_references .inside {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	&:not(.closed) .inside {
+		display: grid;
 	}
 }

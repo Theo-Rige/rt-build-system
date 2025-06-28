@@ -52,6 +52,7 @@ class Admin {
      */
     public static function addCustomFields($post) {
         add_meta_box('rtbs_component_libraries', __('Libraries', 'rt-build-system'), [static::class, 'renderLibrariesMetaBox'], Plugin::COMPONENT_POST_TYPE, 'normal', 'high');
+        add_meta_box('rtbs_component_references', __('References', 'rt-build-system'), [static::class, 'renderReferencesMetaBox'], Plugin::COMPONENT_POST_TYPE, 'normal', 'high');
     }
 
     /**
@@ -73,6 +74,24 @@ class Admin {
     }
 
     /**
+     * Render the references meta box.
+     *
+     * @param \WP_Post $post The post object.
+     */
+    public static function renderReferencesMetaBox($post) {
+        $references = get_post_meta($post->ID, 'rtbs_references', true) ?: [];
+        $references[] = [
+            'title' => '',
+            'url' => ''
+        ];
+
+        Tool::loadTemplate('references', [
+            'post' => $post,
+            'references' => $references
+        ], true);
+    }
+
+    /**
      * Save custom fields for component post type.
      *
      * @param int $postID The post ID.
@@ -88,6 +107,14 @@ class Admin {
             });
 
             update_post_meta($postID, 'rtbs_libraries', $_POST['rtbs_libraries']);
+        }
+
+        if (isset($_POST['rtbs_references'])) {
+            $_POST['rtbs_references'] = array_filter($_POST['rtbs_references'], function ($reference) {
+                return !empty($reference['title']) && !empty($reference['url']);
+            });
+
+            update_post_meta($postID, 'rtbs_references', $_POST['rtbs_references']);
         }
     }
 }
