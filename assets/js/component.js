@@ -64,14 +64,14 @@ class Tabs {
 }
 
 const preview = document.getElementById('preview')
-const previewExpandButton = document.querySelector('#preview .preview__expand')
+const previewExpandButton = document.querySelector('#preview .rtbs-button--expand')
 const copyDesignButton = document.querySelector('.rtbs-button--copy-design')
 const codeTabs = document.getElementById('code')
 
 if (preview && previewExpandButton) {
 	previewExpandButton.addEventListener('click', () => {
 		preview.removeAttribute('style')
-		preview.classList.toggle('preview--expanded')
+		preview.classList.toggle('expanded')
 	})
 }
 
@@ -116,8 +116,8 @@ if (codeTabs) {
 			const lang = codeContainer.dataset.lang || 'javascript'
 			const formattedCode = await codeToHtml(code.textContent, {
 				lang,
-				theme: 'github-dark',
-				colorReplacements: { '#24292e': '#181d27' }
+				theme: 'dark-plus',
+				colorReplacements: { '#1e1e1e': '#181d27' }
 			})
 
 			if (codeContainer) codeContainer.innerHTML = formattedCode

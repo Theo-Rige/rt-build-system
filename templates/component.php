@@ -9,8 +9,12 @@ require_once RTBS_PLUGIN_DIR . 'components/' . $slug . '/class.php';
 $component = Component::getComponentClass($slug);
 $component::init();
 
+$docs = Plugin::getDocs();
 $components = Component::getAll();
+
 $content = get_the_content();
+$dummydata = $component::$dummyData ?? [];
+$preview = $component::loadTemplate('template', $dummydata);
 $libraries = $component::getLibraries();
 $references = $component::getReferences();
 
@@ -18,28 +22,32 @@ wp_head();
 ?>
 
 <body <?php body_class(); ?>>
-    <?= Tool::loadTemplate('navigation', compact('components', 'slug')) ?>
+    <?= Tool::loadTemplate('navigation', compact('docs', 'components', 'slug')) ?>
     <main>
         <article>
             <h1><?= get_the_title() ?></h1>
             <?php if (!empty($content)) : ?>
-                <section id="description">
+                <section id="description" class="rtbs-content">
                     <?= $content ?>
                 </section>
             <?php endif; ?>
-            <section id="actions" class="actions">
+            <section id="actions">
                 <a href="<?= admin_url('admin-ajax.php') . '?action=rtbs_download_zip&slug=' . $slug ?>" class="rtbs-button rtbs-button--secondary rtbs-button--download" download><?= __('Download ZIP folder', 'rt-build-system') ?></a>
                 <button type="button" class="rtbs-button rtbs-button--secondary rtbs-button--copy-design">
                     <?= Tool::loadSVG('figma') ?>
                     <?= __('Get design', 'rt-build-system') ?>
                 </button>
             </section>
-            <section id="preview" class="preview">
-                <button type="button" class="rtbs-button rtbs-button--secondary rtbs-button--icon preview__expand" aria-label="<?= __('Expand preview', 'rt-build-system') ?>">
-                    <?= Tool::loadSVG('expand') ?>
-                    <?= Tool::loadSVG('collapse') ?>
-                </button>
-                <?= $component::loadTemplate() ?>
+            <section id="preview">
+                <?php if ($preview) : ?>
+                    <button type="button" class="rtbs-button rtbs-button--secondary rtbs-button--icon rtbs-button--expand" aria-label="<?= __('Expand preview', 'rt-build-system') ?>">
+                        <?= Tool::loadSVG('expand') ?>
+                        <?= Tool::loadSVG('collapse') ?>
+                    </button>
+                    <?= $preview ?>
+                <?php else : ?>
+                    <span><?= __('No preview available for this component.', 'rt-build-system') ?></span>
+                <?php endif; ?>
             </section>
             <section id="libraries">
                 <h2><?= __('Libraries', 'rt-build-system') ?></h2>
@@ -93,9 +101,18 @@ wp_head();
                                 <?= Tool::loadSVG('check') ?>
                             </button>
                             <div class="code" data-lang="<?= $code['lang'] ?>">
-                                <?php $scriptPath = plugin_dir_path(dirname(__FILE__)) . 'components/' . $slug . '/' . $code['file'];
-                                if (file_exists($scriptPath)) : ?>
-                                    <pre><code><?= trim(htmlspecialchars(file_get_contents($scriptPath))) ?></code></pre>
+                                <?php $filePath = plugin_dir_path(dirname(__FILE__)) . 'components/' . $slug . '/' . $code['file'];
+                                if (file_exists($filePath)) :
+                                    $fileContent = file_get_contents($filePath);
+                                    if (empty($fileContent)) : ?>
+                                        <p>
+                                            <?php
+                                            /* translators: %s: Name of the language */
+                                            printf(__('%s file is empty.', 'rt-build-system'), esc_html($code['label'])); ?>
+                                        </p>
+                                    <?php else : ?>
+                                        <pre><code><?= trim(htmlspecialchars($fileContent)) ?></code></pre>
+                                    <?php endif; ?>
                                 <?php else : ?>
                                     <p>
                                         <?php

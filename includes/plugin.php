@@ -9,9 +9,8 @@ require_once RTBS_PLUGIN_DIR . 'includes/tool.php';
 
 class Plugin {
     const COMPONENTS_PAGE = 'components';
-    const COMPONENT_POST_TYPE = 'component';
-    const ORGANISM_POST_TYPE = 'organism';
-    const MOLECULE_POST_TYPE = 'molecule';
+    const COMPONENT_POST_TYPE = RTBS_PLUGIN_PREFIX . '-component';
+    const DOCUMENTATION_POST_TYPE = RTBS_PLUGIN_PREFIX . '-documentation';
 
     /**
      * Initializes the plugin.
@@ -21,7 +20,8 @@ class Plugin {
     public static function init() {
         self::loadTextDomain();
         add_action('init', [self::class, 'registerCustomObjects']);
-        add_filter('template_include', [self::class, 'renderComponentsPage']);
+        add_filter('template_include', [self::class, 'renderPage']);
+        add_action('wp_enqueue_scripts', [static::class, 'enqueueAssets']);
         self::registerComponentAjaxActions();
 
         if (is_admin()) Admin::init();
@@ -84,6 +84,41 @@ class Plugin {
             'show_in_rest' => true,
             'supports' => ['title', 'editor', 'thumbnail'],
         ]);
+
+        register_post_type(self::DOCUMENTATION_POST_TYPE, [
+            'labels' => [
+                'name' => __('Documentation', 'rt-build-system'),
+                'singular_name' => __('Documentation Page', 'rt-build-system'),
+                'add_new' => __('Add new', 'rt-build-system'),
+                'add_new_item' => __('Add new documentation page', 'rt-build-system'),
+                'edit_item' => __('Edit documentation page', 'rt-build-system'),
+                'new_item' => __('New documentation page', 'rt-build-system'),
+                'view_item' => __('View documentation page', 'rt-build-system'),
+                'view_items' => __('View documentation pages', 'rt-build-system'),
+                'search_items' => __('Search documentation', 'rt-build-system'),
+                'not_found' => __('No documentation found', 'rt-build-system'),
+                'not_found_in_trash' => __('No documentation found in trash', 'rt-build-system'),
+            ],
+            'public' => true,
+            'rewrite' => 'docs',
+            'show_in_menu' => RTBS_PLUGIN_DOMAIN,
+            'show_in_rest' => true,
+            'supports' => ['title', 'editor', 'page-attributes'],
+            'hierarchical' => true,
+        ]);
+    }
+
+    /**
+     * Enqueues documentation assets.
+     *
+     * @return void
+     */
+    public static function enqueueAssets() {
+        if (is_singular(self::DOCUMENTATION_POST_TYPE)) {
+            wp_enqueue_style('rtbs-theme', RTBS_PLUGIN_URL . 'assets/css/theme.min.css', [], RTBS_PLUGIN_VERSION);
+            wp_enqueue_style('rtbs-base', RTBS_PLUGIN_URL . 'assets/css/base.min.css', [], RTBS_PLUGIN_VERSION);
+            wp_enqueue_style('rtbs-style', RTBS_PLUGIN_URL . 'assets/css/style.min.css', [], RTBS_PLUGIN_VERSION);
+        }
     }
 
     /**
@@ -161,15 +196,78 @@ class Plugin {
     }
 
     /**
-     * Renders the components page for the plugin.
+     * Creates documentation posts from XML files in the docs directory.
+     *
+     * @return void
+     */
+    public static function createExistingDocumentationPosts() {
+        $docsDir = RTBS_PLUGIN_DIR . 'docs';
+
+        if (!is_dir($docsDir)) return;
+
+        $xmlFiles = glob($docsDir . '/*.xml');
+
+        foreach ($xmlFiles as $xmlFile) {
+            $xml = simplexml_load_file($xmlFile);
+
+            if (!$xml) {
+                error_log("Failed to load XML file: $xmlFile");
+                continue;
+            }
+
+            $pageSlug = basename($xmlFile, '.xml');
+            $existingPost = get_page_by_path($pageSlug, OBJECT, self::DOCUMENTATION_POST_TYPE);
+
+            if ($existingPost) continue;
+
+            error_log("Creating documentation post with this XML array: " . print_r($xml, true));
+            $title = isset($xml->title) ? (string)$xml->title : ucfirst($pageSlug);
+            $content = isset($xml->content) ? (string)$xml->content : '';
+            $order = isset($xml->order) ? (int)$xml->order : 0;
+
+            $postData = [
+                'post_title' => $title,
+                'post_content' => $content,
+                'post_status' => 'publish',
+                'post_type' => self::DOCUMENTATION_POST_TYPE,
+                'post_name' => $pageSlug,
+                'menu_order' => $order,
+            ];
+
+            $postID = wp_insert_post($postData);
+
+            if (is_wp_error($postID)) {
+                error_log("Failed to create documentation post for: $xmlFile");
+            }
+        }
+    }
+
+    /**
+     * Get all documentation posts.
+     *
+     * @return array
+     */
+    public static function getDocs() {
+        return get_posts([
+            'post_type' => self::DOCUMENTATION_POST_TYPE,
+            'numberposts' => -1,
+            'orderby' => 'menu_order',
+            'order' => 'ASC',
+        ]);
+    }
+
+    /**
+     * Renders plugin pages.
      *
      * @return string
      */
-    public static function renderComponentsPage($template) {
+    public static function renderPage($template) {
         if (is_singular(self::COMPONENT_POST_TYPE)) {
             return RTBS_PLUGIN_DIR . 'templates/component.php';
         } else if (is_post_type_archive(self::COMPONENT_POST_TYPE)) {
             return RTBS_PLUGIN_DIR . 'templates/components.php';
+        } else if (is_singular(self::DOCUMENTATION_POST_TYPE)) {
+            return RTBS_PLUGIN_DIR . 'templates/documentation.php';
         }
 
         return $template;
@@ -203,6 +301,7 @@ class Plugin {
     public static function activate() {
         self::registerCustomObjects();
         self::createExistingComponentsPosts();
+        self::createExistingDocumentationPosts();
         flush_rewrite_rules();
     }
 

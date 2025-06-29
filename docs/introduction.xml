@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page>
+    <title>Introduction</title>
+    <order>1</order>
+    <content>
+    <![CDATA[
+        <h2>Bienvenue au Système de Construction RT</h2>
+        <p>Cette documentation vous aidera à démarrer avec l'extension RT Build System.</p>
+        
+        <h3>Installation</h3>
+        <p>L'extension a été installée et activée avec succès.</p>
+        
+        <h3>Prochaines Étapes</h3>
+        <ul>
+            <li>Créer votre premier composant</li>
+            <li>Configurer votre processus de construction</li>
+            <li>Configurer vos paramètres</li>
+        </ul>
+    ]]>
+    </content>
+</page>

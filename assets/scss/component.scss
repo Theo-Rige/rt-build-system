@@ -1,62 +1,6 @@
-body.single-component {
-	background: var(--color-neutral-50);
-
-	nav {
-		--navigation-top: 80px;
-		position: fixed;
-		height: calc(100% - var(--navigation-top) - 24px);
-		top: var(--navigation-top);
-		right: calc(((100vw - var(--main-width)) / 2) + var(--main-width) + 24px);
-		padding-right: 24px;
-		border-right: 1px solid var(--color-neutral-200);
-
-		span {
-			font-weight: 600;
-		}
-
-		ul {
-			display: flex;
-			flex-direction: column;
-			gap: 8px;
-			padding: 0;
-			list-style-type: none;
-
-			a {
-				text-decoration: none;
-				color: var(--color-neutral-600);
-				font-weight: 500;
-				transition: all 0.2s ease-in-out;
-
-				&:hover {
-					color: var(--color-neutral-900);
-				}
-
-				&.active {
-					color: var(--color-primary-500);
-				}
-			}
-		}
-	}
-
+body.single-rtbs-component {
 	main {
-		max-width: var(--main-width);
-		margin: 80px auto;
-
-		section {
-			display: flex;
-			flex-direction: column;
-			gap: 24px;
-			margin-top: 40px;
-
-			h2 {
-				font-size: 1.5rem;
-				font-weight: 500;
-			}
-		}
-
 		#description {
-			gap: unset;
-
 			p {
 				margin: 0;
 			}
@@ -73,7 +17,7 @@ body.single-component {
 			margin-top: 24px;
 		}
 
-		.preview {
+		#preview {
 			position: relative;
 			resize: horizontal;
 			overflow: hidden;
@@ -84,7 +28,7 @@ body.single-component {
 			border: 1px solid var(--color-neutral-200);
 			background: var(--color-neutral-00);
 
-			&__expand {
+			.rtbs-button--expand {
 				position: relative;
 				align-self: end;
 				margin-bottom: 8px;
@@ -99,7 +43,7 @@ body.single-component {
 				}
 			}
 
-			&--expanded {
+			&.expanded {
 				position: absolute;
 				height: 100dvh;
 				width: 100dvw;
@@ -107,7 +51,7 @@ body.single-component {
 				z-index: 1;
 				margin-top: 0;
 
-				.preview__expand {
+				.rtbs-button--expand {
 					.rtbs-icon {
 						&--expand {
 							opacity: 0;
@@ -262,6 +206,8 @@ body.single-component {
 				}
 
 				.code {
+					tab-size: 4;
+
 					p,
 					pre {
 						margin: 0;
@@ -312,11 +258,7 @@ body.single-component {
 		}
 	}
 
-	&:has(#preview.preview--expanded) {
+	&:has(#preview.expanded) {
 		overflow: hidden;
-	}
-
-	&.admin-bar nav {
-		--navigation-top: calc(80px + var(--wp-admin--admin-bar--height));
 	}
 }

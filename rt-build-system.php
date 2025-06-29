@@ -20,6 +20,7 @@ define('RTBS_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('RTBS_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('RTBS_PLUGIN_BASENAME', plugin_basename(__FILE__));
 define('RTBS_PLUGIN_DOMAIN', 'rt-build-system');
+define('RTBS_PLUGIN_PREFIX', 'rtbs');
 define('RTBS_PLUGIN_VERSION', '0.1.0');
 
 require_once RTBS_PLUGIN_DIR . 'includes/plugin.php';

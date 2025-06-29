@@ -26,8 +26,8 @@ class Admin {
      */
     public static function addAdminMenu() {
         add_menu_page(
-            __('Components', 'rt-build-system'),
-            __('Components', 'rt-build-system'),
+            __('Build System', 'rt-build-system'),
+            __('Build System', 'rt-build-system'),
             'read',
             RTBS_PLUGIN_DOMAIN,
             '',
