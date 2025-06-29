@@ -27,20 +27,20 @@ class Component {
      * @var array
      */
     const CODES = [
+        'template' => [
+            'label' => 'Template',
+            'file' => 'template.php',
+            'lang' => 'php'
+        ],
         'php' => [
             'label' => 'PHP',
             'file' => 'class.php',
             'lang' => 'php'
         ],
-        'template' => [
-            'label' => 'Template',
-            'file' => 'template.php',
-            'lang' => 'html'
-        ],
         'style' => [
             'label' => 'CSS',
             'file' => 'style.css',
-            'lang' => 'css'
+            'lang' => 'scss'
         ],
         'js' => [
             'label' => 'JavaScript',
