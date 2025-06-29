@@ -82,7 +82,7 @@ if (copyDesignButton) {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: 'Bearer zpka_4c3accd44d2e4c36911c7ab921e46f74_26e07eb8'
+				Authorization: 'Bearer ...'
 			},
 			body: JSON.stringify({ html: componentHTML, clip: true })
 		})
