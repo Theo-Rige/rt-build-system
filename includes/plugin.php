@@ -171,7 +171,8 @@ class Plugin {
 
                 if ($thumbnail && $postID) {
                     $uploadDir = wp_upload_dir();
-                    $filename = basename($thumbnail);
+                    $originalFilename = basename($thumbnail);
+                    $filename = $componentName . '-' . $originalFilename;
                     $targetPath = trailingslashit($uploadDir['path']) . $filename;
 
                     if (!file_exists($targetPath)) copy($thumbnail, $targetPath);
