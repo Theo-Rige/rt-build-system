@@ -1,0 +1,14 @@
+<component>
+    <title>Carousel</title>
+    <description>
+    <![CDATA[
+    A carousel component for image slideshows.
+    ]]>
+    </description>
+    <libraries>
+        <library>
+            <name>Embla Carousel</name>
+            <repository>https://github.com/davidjbradshaw/embla-carousel</repository>
+        </library>
+    </libraries>
+</component>
