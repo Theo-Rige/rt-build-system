@@ -1,12 +1,16 @@
-<div id="tabs-component" class="tabs">
-    <div class="tabs-list">
-        <?php foreach ($component->tabs as $key => $tab) : ?>
-            <button type="button" id="tabs-<?= $key ?>-trigger" class="tabs-trigger"><?= $tab['label'] ?></button>
+<div class="rtbs-tabs">
+    <div class="rtbs-tabs__list">
+        <?php foreach ($tabs as $key => $tab) : ?>
+            <button type="button" id="tabs-<?= $key ?>-trigger" class="rtbs-tabs-trigger rtbs-unstyled-button rtbs-unstyled-button--secondary">
+                <?= $tab['label'] ?>
+            </button>
         <?php endforeach; ?>
-        <div class="tabs-indicator"></div>
+        <div class="rtbs-tabs-indicator"></div>
     </div>
-    <?php foreach ($component->tabs as $key => $tab) : ?>
-        <div id="tabs-<?= $key ?>-panel" class="tabs-panel">
+    <?php
+    $index = 0;
+    foreach ($tabs as $key => $tab) : ?>
+        <div id="tabs-<?= $key ?>-panel" class="rtbs-tabs-panel" <?= $index === 0 ? 'hidden' : '' ?>>
             <?= $tab['content'] ?? '' ?>
         </div>
     <?php endforeach; ?>
