@@ -5,18 +5,18 @@ use RTBS\Tool;
 
 <div id="search-engine-component">
     <form id="search-engine-filters">
-        <label for="keyword" class="rtbs-label">
+        <label for="keyword" class="rtbs-unstyled-label">
             <?= __('Keywords', 'rt-build-system'); ?>
-            <input type="text" id="keyword" name="keyword" placeholder="Search..." class="rtbs-input" />
+            <input type="text" id="keyword" name="keyword" placeholder="<?= esc_attr__('Search...', 'rt-build-system'); ?>" class="rtbs-unstyled-input" />
         </label>
         <?php foreach ($categories as $category) :
             $options = get_terms(['taxonomy' => $category]);
 
             if (is_wp_error($options) || empty($options)) continue;
         ?>
-            <label for="<?= esc_attr($category) ?>" class="rtbs-label">
+            <label for="<?= esc_attr($category) ?>" class="rtbs-unstyled-label">
                 <?= esc_html(ucfirst(str_replace(['_', '-'], ' ', $category))); ?>
-                <select name="<?= esc_attr($category) ?>" id="<?= esc_attr($category) ?>" class="rtbs-select">
+                <select name="<?= esc_attr($category) ?>" id="<?= esc_attr($category) ?>" class="rtbs-unstyled-select">
                     <button type="button">
                         <selectedcontent></selectedcontent>
                         <?= Tool::loadSVG('chevron-down') ?>
@@ -28,8 +28,8 @@ use RTBS\Tool;
                 </select>
             </label>
         <?php endforeach; ?>
-        <button type="submit" class="rtbs-button rtbs-button--secondary"><?= __('Search', 'rt-build-system'); ?></button>
-        <button type="reset" class="rtbs-button rtbs-button--secondary"><?= __('Reset', 'rt-build-system'); ?></button>
+        <button type="submit" class="rtbs-unstyled-button rtbs-unstyled-button--secondary"><?= __('Search', 'rt-build-system'); ?></button>
+        <button type="reset" class="rtbs-unstyled-button rtbs-unstyled-button--secondary"><?= __('Reset', 'rt-build-system'); ?></button>
     </form>
     <div id="search-engine-results">
         <?php if (!empty($posts)) : ?>

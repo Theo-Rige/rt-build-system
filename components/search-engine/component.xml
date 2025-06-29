@@ -1,6 +1,7 @@
 <component>
-    <name>Moteur de recherche</name>
+    <title>Moteur de recherche</title>
     <description>
+    <![CDATA[
         Un moteur de recherche avec des filtres basés sur les tags et les catégories.<br />
         Il supporte :
         <ul>
@@ -8,6 +9,7 @@
 	        <li>Chargement infini ou pagination</li>
 	        <li>Filtres en haut ou sur le côté</li>
         </ul>
+    ]]>
     </description>
     <libraries>
         <library>

@@ -23,23 +23,23 @@
 	display: flex;
 	flex-direction: column;
 	gap: 16px;
+	padding: 16px;
 	outline: none;
+	border: 1px solid var(--color-neutral-200);
 	text-decoration: none;
 
 	.post-card__thumbnail {
 		width: 100%;
 		object-fit: cover;
-		border-radius: 16px;
 	}
 
 	.post-card__title {
 		color: var(--color-neutral-900);
-		font-size: 1.25rem;
 		font-weight: 500;
 	}
 }
 
-@container rtbs-search-engine (min-width: 600px) {
+@container rtbs-search-engine (min-width: 700px) {
 	#search-engine-filters {
 		flex-direction: row;
 		align-items: flex-end;

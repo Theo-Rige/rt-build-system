@@ -14,7 +14,7 @@ require_once RTBS_PLUGIN_DIR . 'includes/plugin.php';
 require_once RTBS_PLUGIN_DIR . 'includes/component.php';
 
 /**
- * SearchEngine class to handle search engine component loading and rendering.
+ * SearchEngine component class.
  */
 class SearchEngine extends Component {
     /**
@@ -57,8 +57,10 @@ class SearchEngine extends Component {
      * @return string|false The template content or false if template not found.
      */
     public static function loadTemplate($name = 'template', $data = []) {
-        $data['categories'] = get_object_taxonomies(self::POST_TYPE);
-        $data['posts'] = self::getPosts();
+        if ($name === 'template') {
+            $data['categories'] = get_object_taxonomies(self::POST_TYPE);
+            $data['posts'] = self::getPosts();
+        }
 
         return parent::loadTemplate($name, $data);
     }
