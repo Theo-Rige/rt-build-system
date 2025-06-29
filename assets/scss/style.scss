@@ -205,15 +205,6 @@ button:hover:not(:disabled) {
 	font: 500 0.875rem/20px 'Poppins', sans-serif;
 	text-decoration: none;
 	border: none;
-	border-radius: 8px;
-	box-shadow: 0 1px 1px 0.5px rgb(from var(--color-neutral-900) r g b / 0.04),
-		0 3px 3px -1.5px rgb(from var(--color-neutral-900) r g b / 0.02),
-		0 6px 6px -3px rgb(from var(--color-neutral-900) r g b / 0.04),
-		0 12px 12px -6px rgb(from var(--color-neutral-900) r g b / 0.04),
-		0 24px 24px -12px rgb(from var(--color-neutral-900) r g b / 0.04),
-		0 48px 48px -24px rgb(from var(--color-neutral-900) r g b / 0.04),
-		0 0 0 1px rgb(from var(--color-neutral-900) r g b / 0.1),
-		inset 0 -1px 1px -0.5px rgb(from var(--color-neutral-900) r g b / 0.06);
 }
 
 .rtbs-button {
@@ -237,6 +228,7 @@ button:hover:not(:disabled) {
 	&--secondary {
 		color: var(--color-neutral-700);
 		background-color: var(--color-neutral-00);
+		border: 1px solid var(--color-neutral-200);
 
 		&:hover {
 			color: var(--color-neutral-900);
@@ -264,6 +256,7 @@ button:hover:not(:disabled) {
 			flex: 1;
 			font: 500 0.875rem/20px 'Poppins', sans-serif;
 			color: var(--color-neutral-900);
+			white-space: nowrap;
 		}
 
 		svg {
