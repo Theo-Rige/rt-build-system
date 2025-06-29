@@ -16,6 +16,7 @@ class Admin {
         add_action('admin_enqueue_scripts', [static::class, 'enqueueAssets']);
         add_action('add_meta_boxes_' . Plugin::COMPONENT_POST_TYPE, [static::class, 'addCustomFields']);
         add_action('save_post_' . Plugin::COMPONENT_POST_TYPE, [static::class, 'saveCustomFields']);
+        add_action('wp_insert_post', [static::class, 'mergeComponentDirectory'], 10, 3);
     }
 
     /**
@@ -115,6 +116,71 @@ class Admin {
             });
 
             update_post_meta($postID, 'rtbs_references', $_POST['rtbs_references']);
+        }
+    }
+
+    /**
+     * Create/delete component directory when a component is created/trashed.
+     *
+     * @param int $postID The post ID.
+     * @param \WP_Post $post The post object.
+     * @param bool $update Whether this is an update or not.
+     */
+    public static function mergeComponentDirectory($postID, $post, $update) {
+        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+
+        if ($post->post_status === 'auto-draft' || empty($post->post_title)) return;
+
+
+        if ($post->post_type !== Plugin::COMPONENT_POST_TYPE) return;
+
+        $componentSlug = $post->post_name ?: sanitize_title($post->post_title);
+        $componentDir = RTBS_PLUGIN_DIR . 'components/' . $componentSlug;
+
+        if ($post->post_status === 'trash') {
+            $originalSlug = str_replace('__trashed', '', $componentSlug);
+            $originalDir = RTBS_PLUGIN_DIR . 'components/' . $originalSlug;
+
+            if (file_exists($originalDir)) {
+                error_log("Deleting component directory: $originalDir");
+                array_map('unlink', glob("$originalDir/*.*"));
+                rmdir($originalDir);
+            }
+
+            return;
+        }
+
+        if ($update && file_exists($componentDir)) return;
+
+        if (!file_exists($componentDir)) {
+            wp_mkdir_p($componentDir);
+
+            $templateFiles = glob(RTBS_PLUGIN_DIR . 'templates/component/*');
+            foreach ($templateFiles as $file) {
+                error_log("Copying file: $file to $componentDir");
+                if (is_file($file)) {
+                    $filename = basename($file);
+                    copy($file, $componentDir . '/' . $filename);
+                }
+            }
+
+            $classFile = $componentDir . '/class.php';
+            if (file_exists($classFile)) {
+                $classContent = file_get_contents($classFile);
+
+                // Replace component name placeholder
+                $classContent = preg_replace('/const NAME = \'{slug}\'/', "const NAME = '$componentSlug'", $classContent);
+
+                // Replace title in comments
+                $componentTitle = $post->post_title;
+                $classContent = str_replace('{title}', $componentTitle, $classContent);
+
+                // Replace class name from NewComponent to proper component name
+                $className = str_replace(' ', '', ucwords(str_replace('-', ' ', $componentSlug)));
+                $classContent = preg_replace('/class NewComponent extends Component/', "class $className extends Component", $classContent);
+
+                file_put_contents($classFile, $classContent);
+            }
         }
     }
 }
