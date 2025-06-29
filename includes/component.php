@@ -65,6 +65,20 @@ class Component {
     }
 
     /**
+     * Get all components.
+     *
+     * @return array Component posts.
+     */
+    public static function getAll() {
+        return get_posts([
+            'post_type' => Plugin::COMPONENT_POST_TYPE,
+            'numberposts' => -1,
+            'orderby' => 'title',
+            'order' => 'ASC',
+        ]);
+    }
+
+    /**
      * Initialize component hooks.
      */
     public static function init() {
@@ -120,19 +134,19 @@ class Component {
 
         $name = static::getName();
 
-        foreach ($wp_scripts->queue as $handle) {
-            if (preg_match('#rtbs#', $handle)) continue;
+        // foreach ($wp_scripts->queue as $handle) {
+        //     if (preg_match('#rtbs#', $handle)) continue;
 
-            wp_dequeue_script($handle);
-            wp_deregister_script($handle);
-        }
+        //     wp_dequeue_script($handle);
+        //     wp_deregister_script($handle);
+        // }
 
-        foreach ($wp_styles->queue as $handle) {
-            if (preg_match('#rtbs#', $handle)) continue;
+        // foreach ($wp_styles->queue as $handle) {
+        //     if (preg_match('#rtbs#', $handle)) continue;
 
-            wp_dequeue_style($handle);
-            wp_deregister_style($handle);
-        }
+        //     wp_dequeue_style($handle);
+        //     wp_deregister_style($handle);
+        // }
 
         wp_enqueue_script('rtbs-component-script', RTBS_PLUGIN_URL . 'assets/js/component.min.js', [], RTBS_PLUGIN_VERSION, true);
         wp_enqueue_style('rtbs-component-style', RTBS_PLUGIN_URL . 'assets/css/component.min.css', [], RTBS_PLUGIN_VERSION);

@@ -9,6 +9,7 @@ require_once RTBS_PLUGIN_DIR . 'components/' . $slug . '/class.php';
 $component = Component::getComponentClass($slug);
 $component::init();
 
+$components = Component::getAll();
 $libraries = $component::getLibraries();
 $references = $component::getReferences();
 
@@ -16,17 +17,20 @@ wp_head();
 ?>
 
 <body <?php body_class(); ?>>
+    <?= Tool::loadTemplate('navigation', compact('components', 'slug')) ?>
     <main>
         <article>
             <h1><?= get_the_title() ?></h1>
-            <p><?= get_the_content() ?></p>
-            <div class="actions">
+            <section id="description">
+                <?= get_the_content() ?>
+            </section>
+            <section id="actions" class="actions">
                 <a href="<?= admin_url('admin-ajax.php') . '?action=rtbs_download_zip&slug=' . $slug ?>" class="rtbs-button rtbs-button--secondary rtbs-button--download" download><?= __('Download ZIP folder', 'rt-build-system') ?></a>
                 <button type="button" class="rtbs-button rtbs-button--secondary rtbs-button--copy-design">
                     <?= Tool::loadSVG('figma') ?>
                     <?= __('Get design', 'rt-build-system') ?>
                 </button>
-            </div>
+            </section>
             <section id="preview" class="preview">
                 <button type="button" class="rtbs-button rtbs-button--secondary rtbs-button--icon preview__expand" aria-label="<?= __('Expand preview', 'rt-build-system') ?>">
                     <?= Tool::loadSVG('expand') ?>
@@ -86,7 +90,11 @@ wp_head();
                                 if (file_exists($scriptPath)) : ?>
                                     <pre><code><?= trim(htmlspecialchars(file_get_contents($scriptPath))) ?></code></pre>
                                 <?php else : ?>
-                                    <p><?= $code['label'] ?> file not found.</p>
+                                    <p>
+                                        <?php
+                                        /* translators: %s: Name of the language */
+                                        printf(__('%s file not found.', 'rt-build-system'), esc_html($code['label'])); ?>
+                                    </p>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -109,6 +117,5 @@ wp_head();
             </section>
         </article>
     </main>
-
     <?php wp_footer(); ?>
 </body>
