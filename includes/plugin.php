@@ -81,6 +81,7 @@ class Plugin {
             'public' => true,
             'has_archive' => 'components',
             'show_in_menu' => RTBS_PLUGIN_DOMAIN,
+            'show_in_rest' => true,
             'supports' => ['title', 'editor', 'thumbnail'],
         ]);
     }
