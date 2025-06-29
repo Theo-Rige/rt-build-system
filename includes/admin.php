@@ -42,6 +42,8 @@ class Admin {
      * @return void
      */
     public static function enqueueAssets() {
+        wp_enqueue_style('rtbs-theme', RTBS_PLUGIN_URL . 'assets/css/theme.min.css', [], RTBS_PLUGIN_VERSION);
+        wp_enqueue_style('rtbs-style', RTBS_PLUGIN_URL . 'assets/css/style.min.css', [], RTBS_PLUGIN_VERSION);
         wp_enqueue_script('rtbs-admin-script', RTBS_PLUGIN_URL . 'assets/js/admin.min.js', [], RTBS_PLUGIN_VERSION, true);
         wp_enqueue_style('rtbs-admin-style', RTBS_PLUGIN_URL . 'assets/css/admin.min.css', [], RTBS_PLUGIN_VERSION);
     }

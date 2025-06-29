@@ -20,15 +20,10 @@
 			}
 
 			.rtbs-library-date {
-				.icon {
-					display: block;
+				.rtbs-icon {
 					position: absolute;
 					left: 3px;
 					bottom: 3px;
-
-					&_shade {
-						opacity: 0.3;
-					}
 
 					&--exclamation,
 					&--cross {
@@ -36,24 +31,31 @@
 					}
 				}
 
-				input {
+				input:not(:placeholder-shown) {
 					padding-left: 30px;
 				}
 
-				&--warning {
-					border-color: #f0ad4e;
+				&--warning,
+				&--danger {
+					.rtbs-icon--checkmark {
+						display: none;
+					}
+				}
 
-					.icon--exclamation {
+				&--warning {
+					.rtbs-icon--exclamation {
 						display: block;
 					}
 				}
 
 				&--danger {
-					border-color: #d9534f;
-
-					.icon--cross {
+					.rtbs-icon--cross {
 						display: block;
 					}
+				}
+
+				&:has(input:placeholder-shown) .rtbs-icon--checkmark {
+					display: none;
 				}
 			}
 		}

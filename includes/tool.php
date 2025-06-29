@@ -37,7 +37,7 @@ class Tool {
         include RTBS_PLUGIN_DIR . 'assets/svg/' . $name . '.svg';
 
         $svg = ob_get_clean();
-        $svg = str_replace('<svg', '<svg class="icon icon--' . (!empty($class) ? $class : $name) . '"', $svg);
+        $svg = str_replace('<svg', '<svg class="rtbs-icon rtbs-icon--' . (!empty($class) ? $class : $name) . '"', $svg);
 
         return $svg;
     }

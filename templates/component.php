@@ -10,6 +10,7 @@ $component = Component::getComponentClass($slug);
 $component::init();
 
 $components = Component::getAll();
+$content = get_the_content();
 $libraries = $component::getLibraries();
 $references = $component::getReferences();
 
@@ -21,9 +22,11 @@ wp_head();
     <main>
         <article>
             <h1><?= get_the_title() ?></h1>
-            <section id="description">
-                <?= get_the_content() ?>
-            </section>
+            <?php if (!empty($content)) : ?>
+                <section id="description">
+                    <?= $content ?>
+                </section>
+            <?php endif; ?>
             <section id="actions" class="actions">
                 <a href="<?= admin_url('admin-ajax.php') . '?action=rtbs_download_zip&slug=' . $slug ?>" class="rtbs-button rtbs-button--secondary rtbs-button--download" download><?= __('Download ZIP folder', 'rt-build-system') ?></a>
                 <button type="button" class="rtbs-button rtbs-button--secondary rtbs-button--copy-design">
@@ -47,24 +50,28 @@ wp_head();
                         <?php foreach ($libraries as $library) : ?>
                             <div class="library">
                                 <h3><?= esc_html($library['name']) ?></h3>
-                                <a href="<?= esc_url($library['repository']) ?>" target="_blank"><?= __('View on GitHub', 'rt-build-system') ?></a>
-                                <span>
+                                <div class="library__date">
                                     <?php
-                                    // based on the date show the right icon if it more than 6 months or a year old
+                                    $label = '';
                                     $date = strtotime($library['date']);
                                     $currentDate = time();
                                     $sixMonthsAgo = strtotime('-6 months', $currentDate);
                                     $oneYearAgo = strtotime('-1 year', $currentDate);
                                     if ($date < $oneYearAgo) {
+                                        $label = 'Not maintained';
                                         echo Tool::loadSVG('cross');
                                     } elseif ($date < $sixMonthsAgo) {
+                                        $label = 'Risk of not being maintained';
                                         echo Tool::loadSVG('exclamation');
                                     } else {
+                                        $label = 'Maintained';
                                         echo Tool::loadSVG('checkmark');
                                     }
                                     ?>
-                                    <?= esc_html($library['date']) ?>
-                                </span>
+                                    <span><?= esc_html($library['date']) ?></span>
+                                    <span class="library__status"><?= esc_html($label) ?></span>
+                                </div>
+                                <a href="<?= esc_url($library['repository']) ?>" target="_blank"><?= __('View on GitHub', 'rt-build-system') ?></a>
                             </div>
                         <?php endforeach; ?>
                     <?php endif; ?>
@@ -109,7 +116,7 @@ wp_head();
                     <?php else: ?>
                         <?php foreach ($references as $reference) : ?>
                             <div class="reference">
-                                <a href="<?= esc_url($reference['url']) ?>" target="_blank"><?= esc_html($reference['title']) ?></a>
+                                <h3><a href="<?= esc_url($reference['url']) ?>" target="_blank"><?= esc_html($reference['title']) ?></a></h3>
                             </div>
                         <?php endforeach; ?>
                     <?php endif; ?>

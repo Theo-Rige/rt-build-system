@@ -129,27 +129,12 @@ class Component {
      * Enqueue component scripts and styles.
      */
     public static function enqueueAssets() {
-        global $wp_scripts;
-        global $wp_styles;
-
         $name = static::getName();
-
-        // foreach ($wp_scripts->queue as $handle) {
-        //     if (preg_match('#rtbs#', $handle)) continue;
-
-        //     wp_dequeue_script($handle);
-        //     wp_deregister_script($handle);
-        // }
-
-        // foreach ($wp_styles->queue as $handle) {
-        //     if (preg_match('#rtbs#', $handle)) continue;
-
-        //     wp_dequeue_style($handle);
-        //     wp_deregister_style($handle);
-        // }
 
         wp_enqueue_script('rtbs-component-script', RTBS_PLUGIN_URL . 'assets/js/component.min.js', [], RTBS_PLUGIN_VERSION, true);
         wp_enqueue_style('rtbs-component-style', RTBS_PLUGIN_URL . 'assets/css/component.min.css', [], RTBS_PLUGIN_VERSION);
+        wp_enqueue_style('rtbs-base', RTBS_PLUGIN_URL . 'assets/css/base.min.css', [], RTBS_PLUGIN_VERSION);
+        wp_enqueue_style('rtbs-theme', RTBS_PLUGIN_URL . 'assets/css/theme.min.css', [], RTBS_PLUGIN_VERSION);
         wp_enqueue_style('rtbs-style', RTBS_PLUGIN_URL . 'assets/css/style.min.css', [], RTBS_PLUGIN_VERSION);
         wp_enqueue_style('rtbs-unstyle', RTBS_PLUGIN_URL . 'assets/css/unstyle.min.css', [], RTBS_PLUGIN_VERSION);
 
