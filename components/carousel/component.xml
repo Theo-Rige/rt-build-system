@@ -2,7 +2,7 @@
     <title>Carousel</title>
     <description>
     <![CDATA[
-    A carousel component for image slideshows.
+    Un composant de carrousel pour afficher des éléments de manière interactive.
     ]]>
     </description>
     <libraries>
