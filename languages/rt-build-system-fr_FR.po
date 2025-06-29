@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Build System\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-25 21:19+0000\n"
-"PO-Revision-Date: 2025-06-28 20:24+0000\n"
+"PO-Revision-Date: 2025-06-29 20:38+0000\n"
 "Last-Translator: \n"
 "Language-Team: Français\n"
 "Language: fr_FR\n"
@@ -15,17 +15,33 @@ msgstr ""
 "X-Loco-Version: 2.8.0; wp-6.8.1; php-8.3.0-dev\n"
 "X-Domain: rt-build-system"
 
+#. %s: Name of the language
+#: templates/component.php:111
+#, php-format
+msgid "%s file is empty."
+msgstr "Le fichier %s est vide."
+
+#. %s: Name of the language
+#: templates/component.php:120
+#, php-format
+msgid "%s file not found."
+msgstr "Le fichier %s n'a pas été trouvé."
+
 #. Description of the plugin
 msgid "A simple WordPress plugin for building web systems."
 msgstr "Un simple plugin WordPress pour construire des interfaces web."
 
-#: includes/plugin.php:71
+#: includes/plugin.php:71 includes/plugin.php:92
 msgid "Add new"
 msgstr "Ajouter un nouveau"
 
 #: includes/plugin.php:72
 msgid "Add new component"
 msgstr "Ajouter un nouveau composant"
+
+#: includes/plugin.php:93
+msgid "Add new documentation page"
+msgstr "Ajouter une nouvelle page de documentation"
 
 #: includes/plugin.php:57
 msgid "Add new tag"
@@ -36,10 +52,11 @@ msgid "All tags"
 msgstr "Tous les tags"
 
 #. Name of the plugin
+#: includes/admin.php:29 includes/admin.php:30 templates/navigation.php:9
 msgid "Build System"
 msgstr "Build System"
 
-#: templates/component.php:70
+#: templates/component.php:89
 msgid "Code"
 msgstr "Code"
 
@@ -47,11 +64,11 @@ msgstr "Code"
 msgid "Component"
 msgstr "Composant"
 
-#: includes/admin.php:28 includes/admin.php:29 includes/plugin.php:69
+#: includes/plugin.php:69 templates/navigation.php:24
 msgid "Components"
 msgstr "Composants"
 
-#: templates/component.php:80
+#: templates/component.php:99
 msgid "Copy code"
 msgstr "Copier le code"
 
@@ -59,7 +76,15 @@ msgstr "Copier le code"
 msgid "Date of last release"
 msgstr "Date de dernière mise à jour"
 
-#: templates/component.php:24
+#: includes/plugin.php:90 templates/navigation.php:12
+msgid "Documentation"
+msgstr "Documentation"
+
+#: includes/plugin.php:91
+msgid "Documentation Page"
+msgstr "Page de documentation"
+
+#: templates/component.php:35
 msgid "Download ZIP folder"
 msgstr "Télécharger le dossier ZIP"
 
@@ -67,15 +92,19 @@ msgstr "Télécharger le dossier ZIP"
 msgid "Edit component"
 msgstr "Modifier le composant"
 
+#: includes/plugin.php:94
+msgid "Edit documentation page"
+msgstr "Modifier la page de documentation"
+
 #: includes/plugin.php:55
 msgid "Edit tag"
 msgstr "Modifier le tag"
 
-#: templates/component.php:31
+#: templates/component.php:43
 msgid "Expand preview"
 msgstr "Agrandir l'aperçu"
 
-#: templates/component.php:27
+#: templates/component.php:38
 msgid "Get design"
 msgstr "Voir le design"
 
@@ -87,7 +116,7 @@ msgstr "https://github.com/Theo-Rige/wp-build-system"
 msgid "Keywords"
 msgstr "Mots clés"
 
-#: includes/admin.php:54 templates/component.php:38
+#: includes/admin.php:57 templates/component.php:53
 msgid "Libraries"
 msgstr "Librairies"
 
@@ -98,6 +127,10 @@ msgstr "Nom"
 #: includes/plugin.php:74
 msgid "New component"
 msgstr "Nouveau composant"
+
+#: includes/plugin.php:95
+msgid "New documentation page"
+msgstr "Nouvelle page de documentation"
 
 #: includes/plugin.php:58
 msgid "New tag name"
@@ -115,11 +148,23 @@ msgstr "Aucun composant n'a été trouvé dans la poubelle"
 msgid "No data"
 msgstr "Aucune donnée"
 
+#: includes/plugin.php:99
+msgid "No documentation found"
+msgstr "Aucune documentation trouvée"
+
+#: includes/plugin.php:100
+msgid "No documentation found in trash"
+msgstr "Aucune documentation n'a été trouvée dans la corbeille"
+
+#: templates/component.php:49
+msgid "No preview available for this component."
+msgstr "Aucun aperçu n'est disponible pour ce composant."
+
 #: components/search-engine/template.php:40
 msgid "No results found."
 msgstr "Aucun résultat n'a été trouvé."
 
-#: includes/admin.php:55 templates/component.php:97
+#: includes/admin.php:58 templates/component.php:129
 msgid "References"
 msgstr "Références"
 
@@ -143,9 +188,17 @@ msgstr "Rechercher"
 msgid "Search components"
 msgstr "Rechercher des composants"
 
+#: includes/plugin.php:98
+msgid "Search documentation"
+msgstr "Rechercher des pages de documentation"
+
 #: includes/plugin.php:53
 msgid "Search tags"
 msgstr "Rechercher des tags"
+
+#: components/search-engine/template.php:10
+msgid "Search..."
+msgstr "Rechercher..."
 
 #: components/search-engine/template.php:24
 #, php-format
@@ -164,15 +217,15 @@ msgstr "Tags"
 msgid "Theo Rige"
 msgstr "Théo Rigé"
 
-#: templates/component.php:100
+#: templates/component.php:132
 msgid "This component does not have any references."
 msgstr "Ce composant n'a pas de références."
 
-#: templates/component.php:41
+#: templates/component.php:56
 msgid "This component does not use any libraries."
 msgstr "Ce composant n'utilise aucune librairies."
 
-#: includes/plugin.php:102
+#: includes/plugin.php:138
 #, php-format
 msgid "This is the %s component."
 msgstr "C'est le composant %s."
@@ -197,6 +250,14 @@ msgstr "Voir le composant"
 msgid "View components"
 msgstr "Voir les composants"
 
-#: templates/component.php:46
+#: includes/plugin.php:96
+msgid "View documentation page"
+msgstr "Voir la page de documentation"
+
+#: includes/plugin.php:97
+msgid "View documentation pages"
+msgstr "Voir les pages de documentation"
+
+#: templates/component.php:82
 msgid "View on GitHub"
 msgstr "Voir sur GitHub"
