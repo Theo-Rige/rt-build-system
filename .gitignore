@@ -21,3 +21,7 @@ package-lock.json
 
 # The plugin .git directory
 .git
+
+# Translations backup files
+languages/*-backup-*.po~
+languages/*-backup-*.pot~
