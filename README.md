@@ -6,6 +6,12 @@ A WordPress plugin for managing and documenting reusable UI components with an i
 
 RT Build System allows developers to create, manage, and document reusable UI components within WordPress. Each component includes code examples, library dependencies, design references, and live previews, making it perfect for maintaining design systems and component libraries.
 
+## 🚀 Live Demo
+
+Experience RT Build System in action: **[Try the Live Demo](https://playground.wordpress.net/#{%20%22landingPage%22:%20%22/rtbs-documentation/introduction/%22,%20%22login%22:%20true,%20%22steps%22:%20[%20{%20%22step%22:%20%22installPlugin%22,%20%22pluginData%22:%20{%20%22resource%22:%20%22url%22,%20%22url%22:%20%22https://github-proxy.com/proxy/?repo=Theo-Rige/rt-build-system%22%20}%20}%20]%20})**
+
+The demo includes pre-configured components and documentation to showcase all plugin features.
+
 ## Features
 
 -   **Component Management**: Create and organize reusable UI components
@@ -18,6 +24,12 @@ RT Build System allows developers to create, manage, and document reusable UI co
 -   **Download Components**: Export components as ZIP files
 
 ## Installation
+
+### Quick Start with Demo
+
+Try the plugin instantly: [Live Demo](https://playground.wordpress.net/#{%20%22landingPage%22:%20%22/rtbs-documentation/introduction/%22,%20%22login%22:%20true,%20%22steps%22:%20[%20{%20%22step%22:%20%22installPlugin%22,%20%22pluginData%22:%20{%20%22resource%22:%20%22url%22,%20%22url%22:%20%22https://github-proxy.com/proxy/?repo=Theo-Rige/rt-build-system%22%20}%20}%20]%20})
+
+### Manual Installation
 
 1. Download the plugin
 2. Upload to `/wp-content/plugins/`
@@ -132,6 +144,7 @@ The plugin is translation-ready with French translations included. To add your l
 
 -   Website: [rigetheo.netlify.app](https://rigetheo.netlify.app)
 -   GitHub: [Theo-Rige/wp-build-system](https://github.com/Theo-Rige/wp-build-system)
+-   Live Demo: [WordPress Playground](https://playground.wordpress.net/#{%20%22landingPage%22:%20%22/rtbs-documentation/introduction/%22,%20%22login%22:%20true,%20%22steps%22:%20[%20{%20%22step%22:%20%22installPlugin%22,%20%22pluginData%22:%20{%20%22resource%22:%20%22url%22,%20%22url%22:%20%22https://github-proxy.com/proxy/?repo=Theo-Rige/rt-build-system%22%20}%20}%20]%20})
 
 ## License
 
