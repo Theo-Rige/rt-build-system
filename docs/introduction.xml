@@ -4,17 +4,25 @@
     <order>1</order>
     <content>
     <![CDATA[
-        <h2>Bienvenue au Système de Construction RT</h2>
-        <p>Cette documentation vous aidera à démarrer avec l'extension RT Build System.</p>
+        <h2>Bienvenue sur le Build System</h2>
+
+        <p>Un plugin WordPress pour gérer et documenter les composants réutilisables de l'interface utilisateur avec une approche de système de conception intégré.</p>
+
+        <h3>Description</h3>
+
+        <p>RT Build System permet aux développeurs de créer, gérer et documenter des composants d'interface utilisateur réutilisables au sein de WordPress. Chaque composant comprend des exemples de code, des dépendances de bibliothèque, des références de conception et des aperçus en direct, ce qui le rend parfait pour maintenir les systèmes de conception et les bibliothèques de composants.</p>
+
+        <h3>Caractéristiques</h3>
         
-        <h3>Installation</h3>
-        <p>L'extension a été installée et activée avec succès.</p>
-        
-        <h3>Prochaines Étapes</h3>
         <ul>
-            <li>Créer votre premier composant</li>
-            <li>Configurer votre processus de construction</li>
-            <li>Configurer vos paramètres</li>
+            <li>Gestion des composants : Créez et organisez des composants réutilisables</li>
+            <li>Live Previews : Voir les composants en action avec des données fictives</li>
+            <li>Documentation du code : Plusieurs formats de code (HTML, CSS, JS, PHP) avec mise en évidence de la syntaxe</li>
+            <li>Library Tracking : Suivi des dépendances externes et de leur état de maintenance</li>
+            <li>Intégration de la conception : Lien vers les conceptions Figma et d'autres références</li>
+            <li>Système de documentation : Pages de documentation hiérarchiques</li>
+            <li>Support multilingue : Prêt pour la traduction (français inclus)</li>
+            <li>Télécharger les composants : Exportation des composants sous forme de fichiers ZIP</li>
         </ul>
     ]]>
     </content>
