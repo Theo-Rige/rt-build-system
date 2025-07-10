@@ -86,7 +86,7 @@ wp_head();
                 </div>
             </section>
             <section>
-                <h2><?= __('Fichiers', 'rt-build-system') ?></h2>
+                <h2><?= __('Files', 'rt-build-system') ?></h2>
                 <div id="code" class="tabs">
                     <div class="tabs-list">
                         <?php foreach ($component::CODES as $key => $code) : ?>

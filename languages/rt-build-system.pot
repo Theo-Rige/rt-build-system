@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Build System\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-29 20:34+0000\n"
+"POT-Creation-Date: 2025-07-10 14:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -17,13 +17,13 @@ msgstr ""
 "X-Domain: rt-build-system"
 
 #. %s: Name of the language
-#: templates/component.php:111
+#: templates/component.php:106
 #, php-format
 msgid "%s file is empty."
 msgstr ""
 
 #. %s: Name of the language
-#: templates/component.php:120
+#: templates/component.php:121
 #, php-format
 msgid "%s file not found."
 msgstr ""
@@ -57,10 +57,6 @@ msgstr ""
 msgid "Build System"
 msgstr ""
 
-#: templates/component.php:89
-msgid "Code"
-msgstr ""
-
 #: includes/plugin.php:70
 msgid "Component"
 msgstr ""
@@ -69,8 +65,12 @@ msgstr ""
 msgid "Components"
 msgstr ""
 
-#: templates/component.php:99
+#: templates/component.php:109
 msgid "Copy code"
+msgstr ""
+
+#: templates/component.php:135
+msgid "Date"
 msgstr ""
 
 #: templates/libraries.php:17
@@ -85,7 +85,7 @@ msgstr ""
 msgid "Documentation Page"
 msgstr ""
 
-#: templates/component.php:35
+#: templates/component.php:45
 msgid "Download ZIP folder"
 msgstr ""
 
@@ -101,11 +101,23 @@ msgstr ""
 msgid "Edit tag"
 msgstr ""
 
-#: templates/component.php:43
+#: templates/component.php:60
 msgid "Expand preview"
 msgstr ""
 
-#: templates/component.php:38
+#: includes/admin.php:57
+msgid "Figma"
+msgstr ""
+
+#: templates/figma.php:7
+msgid "Figma Link"
+msgstr ""
+
+#: templates/component.php:89
+msgid "Files"
+msgstr ""
+
+#: templates/component.php:50
 msgid "Get design"
 msgstr ""
 
@@ -117,10 +129,31 @@ msgstr ""
 msgid "Keywords"
 msgstr ""
 
-#: includes/admin.php:57 templates/component.php:53
+#: templates/component.php:76
+msgid "Last update"
+msgstr ""
+
+#: includes/admin.php:58 templates/component.php:70
 msgid "Libraries"
 msgstr ""
 
+#: includes/component.php:310
+msgid "Library not found"
+msgstr ""
+
+#: templates/component.php:136
+msgid "Link"
+msgstr ""
+
+#: templates/status/maintained.php:8
+msgid "Maintained"
+msgstr ""
+
+#: includes/component.php:301
+msgid "Missing parameters"
+msgstr ""
+
+#: templates/component.php:75 templates/component.php:134
 #: templates/libraries.php:9
 msgid "Name"
 msgstr ""
@@ -145,6 +178,7 @@ msgstr ""
 msgid "No components found in trash"
 msgstr ""
 
+#: templates/component.php:81 templates/component.php:82
 #: templates/libraries.php:21
 msgid "No data"
 msgstr ""
@@ -157,7 +191,7 @@ msgstr ""
 msgid "No documentation found in trash"
 msgstr ""
 
-#: templates/component.php:49
+#: templates/component.php:66
 msgid "No preview available for this component."
 msgstr ""
 
@@ -165,11 +199,15 @@ msgstr ""
 msgid "No results found."
 msgstr ""
 
-#: includes/admin.php:58 templates/component.php:129
+#: templates/status/deprecated.php:8
+msgid "Not maintained"
+msgstr ""
+
+#: includes/admin.php:59 templates/component.php:129
 msgid "References"
 msgstr ""
 
-#: templates/libraries.php:13
+#: templates/component.php:78 templates/libraries.php:13
 msgid "Repository"
 msgstr ""
 
@@ -179,6 +217,10 @@ msgstr ""
 
 #. Author URI of the plugin
 msgid "rigetheo.netlify.app"
+msgstr ""
+
+#: templates/status/risky.php:8
+msgid "Risk of not being maintained"
 msgstr ""
 
 #: components/search-engine/template.php:31
@@ -206,6 +248,14 @@ msgstr ""
 msgid "Select a %s"
 msgstr ""
 
+#: templates/component.php:55
+msgid "Share"
+msgstr ""
+
+#: templates/component.php:77
+msgid "Status"
+msgstr ""
+
 #: includes/plugin.php:52
 msgid "Tag"
 msgstr ""
@@ -222,7 +272,7 @@ msgstr ""
 msgid "This component does not have any references."
 msgstr ""
 
-#: templates/component.php:56
+#: templates/component.php:73
 msgid "This component does not use any libraries."
 msgstr ""
 
@@ -259,6 +309,6 @@ msgstr ""
 msgid "View documentation pages"
 msgstr ""
 
-#: templates/component.php:82
-msgid "View on GitHub"
+#: templates/component.php:140
+msgid "Website"
 msgstr ""

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Build System\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-25 21:19+0000\n"
-"PO-Revision-Date: 2025-06-29 20:38+0000\n"
+"PO-Revision-Date: 2025-07-10 14:19+0000\n"
 "Last-Translator: \n"
 "Language-Team: Français\n"
 "Language: fr_FR\n"
@@ -16,13 +16,13 @@ msgstr ""
 "X-Domain: rt-build-system"
 
 #. %s: Name of the language
-#: templates/component.php:111
+#: templates/component.php:106
 #, php-format
 msgid "%s file is empty."
 msgstr "Le fichier %s est vide."
 
 #. %s: Name of the language
-#: templates/component.php:120
+#: templates/component.php:121
 #, php-format
 msgid "%s file not found."
 msgstr "Le fichier %s n'a pas été trouvé."
@@ -56,10 +56,6 @@ msgstr "Tous les tags"
 msgid "Build System"
 msgstr "Build System"
 
-#: templates/component.php:89
-msgid "Code"
-msgstr "Code"
-
 #: includes/plugin.php:70
 msgid "Component"
 msgstr "Composant"
@@ -68,9 +64,13 @@ msgstr "Composant"
 msgid "Components"
 msgstr "Composants"
 
-#: templates/component.php:99
+#: templates/component.php:109
 msgid "Copy code"
 msgstr "Copier le code"
+
+#: templates/component.php:135
+msgid "Date"
+msgstr "Date"
 
 #: templates/libraries.php:17
 msgid "Date of last release"
@@ -84,7 +84,7 @@ msgstr "Documentation"
 msgid "Documentation Page"
 msgstr "Page de documentation"
 
-#: templates/component.php:35
+#: templates/component.php:45
 msgid "Download ZIP folder"
 msgstr "Télécharger le dossier ZIP"
 
@@ -100,11 +100,23 @@ msgstr "Modifier la page de documentation"
 msgid "Edit tag"
 msgstr "Modifier le tag"
 
-#: templates/component.php:43
+#: templates/component.php:60
 msgid "Expand preview"
 msgstr "Agrandir l'aperçu"
 
-#: templates/component.php:38
+#: includes/admin.php:57
+msgid "Figma"
+msgstr "Figma"
+
+#: templates/figma.php:7
+msgid "Figma Link"
+msgstr "Lien Figma"
+
+#: templates/component.php:89
+msgid "Files"
+msgstr "Fichiers"
+
+#: templates/component.php:50
 msgid "Get design"
 msgstr "Voir le design"
 
@@ -116,10 +128,31 @@ msgstr "https://github.com/Theo-Rige/wp-build-system"
 msgid "Keywords"
 msgstr "Mots clés"
 
-#: includes/admin.php:57 templates/component.php:53
+#: templates/component.php:76
+msgid "Last update"
+msgstr "Dernière mise à jour"
+
+#: includes/admin.php:58 templates/component.php:70
 msgid "Libraries"
 msgstr "Librairies"
 
+#: includes/component.php:310
+msgid "Library not found"
+msgstr "Librairie non trouvée"
+
+#: templates/component.php:136
+msgid "Link"
+msgstr "Lien"
+
+#: templates/status/maintained.php:8
+msgid "Maintained"
+msgstr "Maintenu"
+
+#: includes/component.php:301
+msgid "Missing parameters"
+msgstr "Paramètres manquants"
+
+#: templates/component.php:75 templates/component.php:134
 #: templates/libraries.php:9
 msgid "Name"
 msgstr "Nom"
@@ -144,6 +177,7 @@ msgstr "Aucun composant trouvé"
 msgid "No components found in trash"
 msgstr "Aucun composant n'a été trouvé dans la poubelle"
 
+#: templates/component.php:81 templates/component.php:82
 #: templates/libraries.php:21
 msgid "No data"
 msgstr "Aucune donnée"
@@ -156,7 +190,7 @@ msgstr "Aucune documentation trouvée"
 msgid "No documentation found in trash"
 msgstr "Aucune documentation n'a été trouvée dans la corbeille"
 
-#: templates/component.php:49
+#: templates/component.php:66
 msgid "No preview available for this component."
 msgstr "Aucun aperçu n'est disponible pour ce composant."
 
@@ -164,11 +198,15 @@ msgstr "Aucun aperçu n'est disponible pour ce composant."
 msgid "No results found."
 msgstr "Aucun résultat n'a été trouvé."
 
-#: includes/admin.php:58 templates/component.php:129
+#: templates/status/deprecated.php:8
+msgid "Not maintained"
+msgstr "Non maintenu"
+
+#: includes/admin.php:59 templates/component.php:129
 msgid "References"
 msgstr "Références"
 
-#: templates/libraries.php:13
+#: templates/component.php:78 templates/libraries.php:13
 msgid "Repository"
 msgstr "Dépôt"
 
@@ -179,6 +217,10 @@ msgstr "Réinitialiser"
 #. Author URI of the plugin
 msgid "rigetheo.netlify.app"
 msgstr "rigetheo.netlify.app"
+
+#: templates/status/risky.php:8
+msgid "Risk of not being maintained"
+msgstr "Risque de non-maintien"
 
 #: components/search-engine/template.php:31
 msgid "Search"
@@ -205,6 +247,14 @@ msgstr "Rechercher..."
 msgid "Select a %s"
 msgstr "Sélectionner un %s"
 
+#: templates/component.php:55
+msgid "Share"
+msgstr "Partager"
+
+#: templates/component.php:77
+msgid "Status"
+msgstr "Statut"
+
 #: includes/plugin.php:52
 msgid "Tag"
 msgstr "Tag"
@@ -221,7 +271,7 @@ msgstr "Théo Rigé"
 msgid "This component does not have any references."
 msgstr "Ce composant n'a pas de références."
 
-#: templates/component.php:56
+#: templates/component.php:73
 msgid "This component does not use any libraries."
 msgstr "Ce composant n'utilise aucune librairies."
 
@@ -258,6 +308,6 @@ msgstr "Voir la page de documentation"
 msgid "View documentation pages"
 msgstr "Voir les pages de documentation"
 
-#: templates/component.php:82
-msgid "View on GitHub"
-msgstr "Voir sur GitHub"
+#: templates/component.php:140
+msgid "Website"
+msgstr "Site web"
