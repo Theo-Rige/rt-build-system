@@ -16,7 +16,9 @@ wp_head();
     <?= Tool::loadTemplate('navigation', compact('docs', 'components', 'slug')) ?>
     <main>
         <article>
-            <h1><?= get_the_title() ?></h1>
+            <header>
+                <h1><?= get_the_title() ?></h1>
+            </header>
             <?php if (!empty($content)) : ?>
                 <section id="content" class="rtbs-content">
                     <?= $content ?>

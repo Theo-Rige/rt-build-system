@@ -1,17 +1,4 @@
 body[class*='rtbs-'] {
-	.rtbs-header {
-		display: flex;
-		border-bottom: 1px solid var(--border-secondary);
-
-		&__left {
-			width: calc((100vw - var(--main-width)) / 2);
-			display: flex;
-			justify-content: end;
-			align-items: end;
-			padding: 80px 24px 24px;
-		}
-	}
-
 	.rtbs-navigation {
 		position: fixed;
 		height: 100%;
@@ -95,26 +82,55 @@ body[class*='rtbs-'] {
 
 	main {
 		max-width: var(--main-width);
+		min-height: calc(100vh - var(--wp-admin--admin-bar--height));
 		margin: 0 auto;
 
 		article {
+			min-height: calc(100% - 80px);
 			border-left: 1px solid var(--border-secondary);
 			border-right: 1px solid var(--border-secondary);
+			padding-bottom: 80px;
+
+			header {
+				padding: 80px 24px 24px;
+				border-bottom: 1px solid var(--border-secondary);
+
+				h1 {
+					font-family: 'PPEditorialNew', sans-serif;
+					text-box: trim-both cap alphabetic;
+				}
+
+				&::after {
+					content: '';
+					height: 1px;
+					width: 100%;
+					background: var(--border-secondary);
+				}
+			}
 
 			section {
 				display: flex;
 				flex-direction: column;
 				padding-top: 80px;
 
-				h2 {
-					padding-inline-start: 24px;
+				h2,
+				h3 {
 					font-family: 'PPEditorialNew', sans-serif;
 					font-size: 1.5rem;
 					font-weight: 500;
 				}
 
+				&.rtbs-content {
+					padding-inline: 24px;
+				}
+
 				&:not(.rtbs-content) {
 					gap: 24px;
+
+					h2,
+					h3 {
+						padding-inline-start: 24px;
+					}
 				}
 			}
 		}
