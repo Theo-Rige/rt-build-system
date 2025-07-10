@@ -58,6 +58,14 @@ body.single-rtbs-component {
 					color: var(--text-brand-secondary);
 				}
 			}
+
+			&--references {
+				grid-template-columns: repeat(3, 1fr);
+
+				.grid__cell:not(:nth-last-child(-n + 3)) {
+					border-bottom: 1px solid var(--border-secondary);
+				}
+			}
 		}
 
 		#description {

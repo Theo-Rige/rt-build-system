@@ -92,6 +92,8 @@ class Component {
     public static function registerAjaxActions() {
         add_action('wp_ajax_rtbs_download_zip', [self::class, 'downloadZip']);
         add_action('wp_ajax_nopriv_rtbs_download_zip', [self::class, 'downloadZip']);
+        add_action('wp_ajax_rtbs_update_library_status', [self::class, 'updateLibraryStatus']);
+        add_action('wp_ajax_nopriv_rtbs_update_library_status', [self::class, 'updateLibraryStatus']);
     }
 
     /**
@@ -140,7 +142,8 @@ class Component {
 
         wp_localize_script('rtbs-component-script', 'RTBS', [
             'ajaxUrl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('rtbs_nonce')
+            'nonce' => wp_create_nonce('rtbs_nonce'),
+            'id' => get_the_ID()
         ]);
 
         $scriptPath = self::getComponentPath($name, 'script.js');
@@ -149,11 +152,6 @@ class Component {
         if (file_exists($scriptPath)) {
             $scriptURL = self::getComponentUrl($name, 'script.js');
             wp_enqueue_script('rtbs-' . $name . '-script', $scriptURL, [], RTBS_PLUGIN_VERSION, true);
-
-            wp_localize_script('rtbs-' . $name . '-script', 'RTBS', [
-                'ajaxUrl' => admin_url('admin-ajax.php'),
-                'nonce' => wp_create_nonce('rtbs_nonce')
-            ]);
         }
 
         if (file_exists($stylePath)) {
@@ -208,16 +206,18 @@ class Component {
      * Get component libraries.
      *
      */
-    public static function getLibraries() {
-        return get_post_meta(get_the_ID(), 'rtbs_libraries', true) ?: [];
+    public static function getLibraries($id = null) {
+        $id = $id ?: get_the_ID();
+        return get_post_meta($id, 'rtbs-libraries', true) ?: [];
     }
 
     /**
      * Get component references.
      *
      */
-    public static function getReferences() {
-        return get_post_meta(get_the_ID(), 'rtbs_references', true) ?: [];
+    public static function getReferences($id = null) {
+        $id = $id ?: get_the_ID();
+        return get_post_meta($id, 'rtbs-references', true) ?: [];
     }
 
     /**
@@ -289,5 +289,31 @@ class Component {
         readfile($zip_path);
         unlink($zip_path);
         exit;
+    }
+
+    /**
+     * Update library status via AJAX.
+     *
+     * @return void
+     */
+    public static function updateLibraryStatus() {
+        if (!isset($_POST['id']) || !isset($_POST['index']) || !isset($_POST['date'])) {
+            wp_send_json_error(['message' => __('Missing parameters', 'rt-build-system')], 400);
+        }
+
+        $id = intval($_POST['id']);
+        $index = intval($_POST['index']);
+        $date = sanitize_text_field($_POST['date']);
+        $libraries = self::getLibraries($id);
+
+        if (!isset($libraries[$index])) {
+            wp_send_json_error(['message' => __('Library not found', 'rt-build-system')], 404);
+        }
+
+        $libraries[$index]['date'] = $date;
+
+        $statusHTML = self::getLibraryStatus($date);
+
+        wp_send_json_success($statusHTML);
     }
 }

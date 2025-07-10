@@ -158,14 +158,14 @@ function initializeRepeatedFields(config) {
 
 // Initialize libraries metabox
 initializeRepeatedFields({
-	containerSelector: '#rtbs_component_libraries',
+	containerSelector: '#rtbs-component-libraries',
 	itemSelector: '.rtbs-postbox-item--library',
-	fieldPrefix: 'rtbs_libraries'
+	fieldPrefix: 'rtbs-libraries'
 })
 
 // Initialize references metabox
 initializeRepeatedFields({
-	containerSelector: '#rtbs_component_references',
+	containerSelector: '#rtbs-component-references',
 	itemSelector: '.rtbs-postbox-item--reference',
-	fieldPrefix: 'rtbs_references'
+	fieldPrefix: 'rtbs-references'
 })

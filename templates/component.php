@@ -12,6 +12,7 @@ $component::init();
 $docs = Plugin::getDocs();
 $components = Component::getAll();
 
+$dummydata = $component::$dummyData ?? [];
 $content = get_the_content();
 $figma = get_post_meta(get_the_ID(), 'rtbs-figma', true);
 $preview = $component::loadTemplate('template', $dummydata);
@@ -67,7 +68,7 @@ wp_head();
             </section>
             <section id="libraries">
                 <h2><?= __('Libraries', 'rt-build-system') ?></h2>
-                <div class="grid">
+                <div class="grid grid--libraries">
                     <?php if (empty($libraries)) : ?>
                         <p class="grid__cell grid__cell--empty"><?= __('This component does not use any libraries.', 'rt-build-system') ?></p>
                     <?php else: ?>
@@ -75,11 +76,11 @@ wp_head();
                         <span class="grid__cell grid__cell--header"><?= __('Last update', 'rt-build-system') ?></span>
                         <span class="grid__cell grid__cell--header"><?= __('Status', 'rt-build-system') ?></span>
                         <span class="grid__cell grid__cell--header"><?= __('Repository', 'rt-build-system') ?></span>
-                        <?php foreach ($libraries as $library) : ?>
-                            <div class="grid__cell"><?= esc_html($library['name']) ?></div>
-                            <div class="grid__cell"><?= esc_html($library['date']) ?></div>
-                            <div class="grid__cell"><?= $component::getLibraryStatus($library['date']) ?></div>
-                            <a class="grid__cell" href="<?= esc_url($library['repository']) ?>" target="_blank">GitHub</a>
+                        <?php foreach ($libraries as $index => $library) : ?>
+                            <div class="grid__cell grid__cell--name" data-index="<?= esc_attr($index) ?>"><?= esc_html($library['name']) ?></div>
+                            <div class="grid__cell grid__cell--date" data-index="<?= esc_attr($index) ?>"><?= $library['date'] ? esc_html($library['date']) : __('No data', 'rt-build-system') ?></div>
+                            <div class="grid__cell grid__cell--status" data-index="<?= esc_attr($index) ?>"><?= $library['date'] ? $component::getLibraryStatus($library['date']) : __('No data', 'rt-build-system') ?></div>
+                            <a class="grid__cell grid__cell--link" data-index="<?= esc_attr($index) ?>" href="<?= esc_url($library['repository']) ?>" target="_blank">GitHub</a>
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </div>
@@ -126,7 +127,7 @@ wp_head();
             </section>
             <section id="references">
                 <h2><?= __('References', 'rt-build-system') ?></h2>
-                <div class="grid">
+                <div class="grid grid--references">
                     <?php if (empty($references)) : ?>
                         <p class="grid__cell grid__cell--empty"><?= __('This component does not have any references.', 'rt-build-system') ?></p>
                     <?php else: ?>
@@ -136,7 +137,7 @@ wp_head();
                         <?php foreach ($references as $reference) : ?>
                             <div class="grid__cell"><?= esc_html($reference['name']) ?></div>
                             <div class="grid__cell"><?= esc_html($reference['date']) ?></div>
-                            <a class="grid__cell" href="<?= esc_url($reference['url']) ?>" target="_blank"><?= esc_html($reference['title']) ?></a>
+                            <a class="grid__cell" href="<?= esc_url($reference['url']) ?>" target="_blank"><?= __('Website', 'rt-build-system') ?></a>
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </div>
