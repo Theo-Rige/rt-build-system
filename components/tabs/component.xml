@@ -2,7 +2,10 @@
     <title>Tabs</title>
     <description>
     <![CDATA[
+    <!-- wp:paragraph -->
     Un composant d'onglets pour organiser le contenu.
+    <!-- /wp:paragraph -->
     ]]>
     </description>
+    <figma><![CDATA[https://www.figma.com/design/YwtIKdIMJFH4CLZovr9AJO/Build-System-V2?node-id=10-2&t=C4Q2f5NfVnwtwF2u-1]]></figma>
 </component>

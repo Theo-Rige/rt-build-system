@@ -2,13 +2,17 @@
     <title>Carousel</title>
     <description>
     <![CDATA[
+    <!-- wp:paragraph -->
     Un composant de carrousel pour afficher des éléments de manière interactive.
+    <!-- /wp:paragraph -->
     ]]>
     </description>
+    <figma><![CDATA[https://www.figma.com/design/YwtIKdIMJFH4CLZovr9AJO/Build-System-V2?node-id=10-3&t=C4Q2f5NfVnwtwF2u-1]]></figma>
     <libraries>
         <library>
             <name>Embla Carousel</name>
-            <repository>https://github.com/davidjbradshaw/embla-carousel</repository>
+            <version>8.6.0</version>
+            <repository>https://github.com/davidjerleke/embla-carousel</repository>
         </library>
     </libraries>
 </component>

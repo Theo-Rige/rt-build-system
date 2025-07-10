@@ -18,9 +18,9 @@
     <figma><![CDATA[https://www.figma.com/design/YwtIKdIMJFH4CLZovr9AJO/Build-System-V2?node-id=0-1&t=97zXLzPPOrg0HrjG-1]]></figma>
     <libraries>
         <library>
-            <name>Embla Carousel</name>
-            <version>6.0.0</version>
-            <repository>https://github.com/davidjbradshaw/embla-carousel</repository>
+            <name>Fuse</name>
+            <version>7.1.0</version>
+            <repository>https://github.com/krisk/fuse</repository>
         </library>
     </libraries>
     <references>
