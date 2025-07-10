@@ -1,40 +1,121 @@
 :root {
-	--color-primary-50: #e9f4ff;
-	--color-primary-100: #d7ebff;
-	--color-primary-200: #b7d9ff;
-	--color-primary-300: #8cbeff;
-	--color-primary-400: #5e96ff;
-	--color-primary-500: #3a6dff;
-	--color-primary-600: #1840ff;
-	--color-primary-700: #0e33f4;
-	--color-primary-800: #0f2fc4;
-	--color-primary-900: #163099;
-	--color-primary-950: #0a1444;
+	color-scheme: light dark;
 
-	--color-neutral-00: #ffffff;
-	--color-neutral-25: #fdfdfd;
-	--color-neutral-50: #fafafa;
-	--color-neutral-100: #f5f5f5;
-	--color-neutral-200: #e9eaeb;
-	--color-neutral-300: #d5d7da;
-	--color-neutral-400: #a4a7ae;
-	--color-neutral-500: #717680;
-	--color-neutral-600: #535862;
-	--color-neutral-700: #414651;
-	--color-neutral-800: #252b37;
-	--color-neutral-900: #181d27;
-	--color-neutral-950: #0a0d12;
-
-	--color-success-300: #75e0a7;
-	--color-success-600: #079455;
-
-	--color-warning-300: #fec84b;
-	--color-warning-600: #dc6803;
-
-	--color-error-300: #fda29b;
-	--color-error-600: #d92d20;
-
+	// Global
 	--main-width: 1200px;
+
+	// Primitives
+	//// Neutral
+	--neutral-00: #fff;
+	--neutral-50: #f8fafc;
+	--neutral-100: #f1f5f9;
+	--neutral-200: #e2e8f0;
+	--neutral-300: #cad5e2;
+	--neutral-400: #90a1b9;
+	--neutral-500: #62748e;
+	--neutral-600: #45556c;
+	--neutral-700: #314158;
+	--neutral-800: #1d293d;
+	--neutral-900: #0f172b;
+	--neutral-950: #020618;
+
+	//// Brand
+	--brand-50: #e9f4ff;
+	--brand-100: #d7ebff;
+	--brand-200: #b7d9ff;
+	--brand-300: #8cbeff;
+	--brand-400: #5e96ff;
+	--brand-500: #3a6dff;
+	--brand-600: #1840ff;
+	--brand-700: #0e33f4;
+	--brand-800: #0f2fc4;
+	--brand-900: #163099;
+	--brand-950: #0a1444;
+
+	//// Success
+	--success-50: #ecfdf3;
+	--success-100: #dcfae6;
+	--success-200: #abefc6;
+	--success-300: #75e0a7;
+	--success-400: #47cd89;
+	--success-500: #17b26a;
+	--success-600: #079455;
+	--success-700: #067647;
+	--success-800: #085d34;
+	--success-900: #074d31;
+	--success-950: #053321;
+
+	//// Warning
+	--warning-50: #fffaeb;
+	--warning-100: #fef0c7;
+	--warning-200: #fedf89;
+	--warning-300: #fec84b;
+	--warning-400: #fdb022;
+	--warning-500: #f79009;
+	--warning-600: #dc6803;
+	--warning-700: #b54708;
+	--warning-800: #93370d;
+	--warning-900: #7a2e0e;
+	--warning-950: #4e1d09;
+
+	//// Error
+	--error-50: #fef3f2;
+	--error-100: #fee4e2;
+	--error-200: #fecdca;
+	--error-300: #fda29b;
+	--error-400: #f97066;
+	--error-500: #f04438;
+	--error-600: #d92d20;
+	--error-700: #b42318;
+	--error-800: #912018;
+	--error-900: #7a271a;
+	--error-950: #55160c;
+
+	// Tokens
+	//// Texts
+	--text-primary: light-dark(var(--neutral-900), var(--neutral-50));
+	--text-secondary: light-dark(var(--neutral-700), var(--neutral-300));
+	--text-tertiary: light-dark(var(--neutral-600), var(--neutral-400));
+	--text-solid-primary: light-dark(var(--neutral-50), var(--neutral-900));
+	--text-solid-secondary: light-dark(var(--neutral-300), var(--neutral-700));
+	--text-brand-primary: light-dark(var(--brand-600), var(--brand-400));
+	--text-brand-secondary: light-dark(var(--brand-400), var(--brand-600));
+	--text-success-primary: light-dark(var(--success-700), var(--success-300));
+	--text-warning-primary: light-dark(var(--warning-700), var(--warning-300));
+	--text-error-primary: light-dark(var(--error-700), var(--error-300));
+
+	//// Borders
+	--border-primary: light-dark(var(--neutral-200), var(--neutral-700));
+	--border-secondary: light-dark(var(--neutral-200), var(--neutral-800));
+	--border-success-primary: light-dark(var(--success-300), var(--success-800));
+	--border-warning-primary: light-dark(var(--warning-300), var(--warning-800));
+	--border-error-primary: light-dark(var(--error-300), var(--error-800));
+
+	//// Foregrounds
+	--foreground-primary: light-dark(var(--neutral-900), var(--neutral-00));
+	--foreground-secondary: light-dark(var(--neutral-700), var(--neutral-300));
+	--foreground-solid-secondary: light-dark(var(--neutral-300), var(--neutral-700));
+	--foreground-brand-primary: light-dark(var(--brand-600), var(--brand-400));
+	--foreground-brand-secondary: light-dark(var(--brand-400), var(--brand-600));
+	--foreground-success-primary: light-dark(var(--success-700), var(--success-300));
+	--foreground-warning-primary: light-dark(var(--warning-700), var(--warning-300));
+	--foreground-error-primary: light-dark(var(--error-700), var(--error-300));
+
+	//// Backgrounds
+	--background-primary: light-dark(var(--neutral-00), var(--neutral-950));
+	--background-secondary: light-dark(var(--neutral-50), var(--neutral-900));
+	--background-solid-primary: light-dark(var(--neutral-950), var(--neutral-00));
+	--background-solid-secondary: light-dark(var(--neutral-900), var(--neutral-100));
+	--background-success-primary: light-dark(var(--success-100), var(--success-950));
+	--background-warning-primary: light-dark(var(--warning-100), var(--warning-950));
+	--background-error-primary: light-dark(var(--error-100), var(--error-950));
+}
+
+@font-face {
+	font-family: 'PPEditorialNew';
+	font-style: normal;
+	font-weight: 400;
+	src: url('../fonts/PPEditorialNew/PPEditorialNew-Regular.woff2') format('woff2');
 }
 
 @font-face {

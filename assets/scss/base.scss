@@ -4,8 +4,8 @@ html {
 
 body {
 	font: 400 100% 'Poppins', sans-serif;
-	color: var(--color-neutral-900);
-	background: var(--color-neutral-50);
+	color: var(--text-primary);
+	background: var(--background-primary);
 }
 
 h1,
@@ -16,11 +16,20 @@ h5,
 h6 {
 	display: inline-block;
 	margin: 0;
-	color: var(--color-neutral-900);
+	color: var(--text-primary);
 }
 
 h1 {
 	font-size: 40px;
+}
+
+p {
+	color: var(--text-tertiary);
+}
+
+ul {
+	color: var(--text-tertiary);
+	list-style-type: '-    ';
 }
 
 button,
@@ -28,7 +37,7 @@ input,
 select,
 textarea {
 	font: 400 1rem 'Poppins', sans-serif;
-	color: var(--color-neutral-900);
+	color: var(--text-primary);
 	transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 }
 

@@ -65,7 +65,7 @@ class Tabs {
 
 const preview = document.getElementById('preview')
 const previewExpandButton = document.querySelector('#preview .rtbs-button--expand')
-const copyDesignButton = document.querySelector('.rtbs-button--copy-design')
+const copyDesignButton = document.querySelector('.rtbs-button--copy')
 const codeTabs = document.getElementById('code')
 
 if (preview && previewExpandButton) {
@@ -117,7 +117,7 @@ if (codeTabs) {
 			const formattedCode = await codeToHtml(code.textContent, {
 				lang,
 				theme: 'dark-plus',
-				colorReplacements: { '#1e1e1e': '#181d27' }
+				colorReplacements: { '#1e1e1e': '#0f172b' }
 			})
 
 			if (codeContainer) codeContainer.innerHTML = formattedCode

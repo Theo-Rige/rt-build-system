@@ -3,17 +3,17 @@
 	flex-direction: column;
 	gap: 4px;
 	font: 500 0.875rem/20px 'Poppins', sans-serif;
-	color: var(--color-neutral-700);
+	color: var(--text-secondary);
 }
 
-.rtbs-unstyled-button,
-.rtbs-unstyled-select,
-.rtbs-unstyled-input {
+button.rtbs-unstyled-button,
+select.rtbs-unstyled-select,
+input.rtbs-unstyled-input {
 	font: 500 0.875rem/20px 'Poppins', sans-serif;
 	text-decoration: none;
-	border: 1px solid var(--color-neutral-300);
+	border: 1px solid var(--border-primary);
 	border-radius: 0;
-	background: var(--color-neutral-00);
+	background: var(--background-primary);
 }
 
 .rtbs-unstyled-button {
@@ -50,8 +50,8 @@
 
 .rtbs-unstyled-select {
 	padding: 10px 12px 10px 16px;
-	color: var(--color-neutral-900);
-	background-color: var(--color-neutral-00);
+	color: var(--text-primary);
+	background-color: var(--background-primary);
 
 	&,
 	&::picker(select) {
@@ -62,7 +62,7 @@
 		selectedcontent {
 			flex: 1;
 			font: 500 0.875rem/20px 'Poppins', sans-serif;
-			color: var(--color-neutral-900);
+			color: var(--text-primary);
 			white-space: nowrap;
 		}
 
@@ -86,6 +86,6 @@
 
 .rtbs-unstyled-input {
 	padding: 10px 16px;
-	color: var(--color-neutral-900);
-	background-color: var(--color-neutral-00);
+	color: var(--text-primary);
+	background-color: var(--background-primary);
 }

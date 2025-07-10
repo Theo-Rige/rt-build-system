@@ -163,34 +163,63 @@ class Plugin {
 
                 foreach (['jpg', 'jpeg', 'png', 'gif', 'webp'] as $ext) {
                     $candidate = $componentDir . "/thumbnail.$ext";
+
                     if (file_exists($candidate)) {
                         $thumbnail = $candidate;
                         break;
                     }
                 }
 
-                if ($thumbnail && $postID) {
-                    $uploadDir = wp_upload_dir();
-                    $originalFilename = basename($thumbnail);
-                    $filename = $componentName . '-' . $originalFilename;
-                    $targetPath = trailingslashit($uploadDir['path']) . $filename;
+                if ($postID) {
+                    if ($thumbnail) {
+                        $uploadDir = wp_upload_dir();
+                        $originalFilename = basename($thumbnail);
+                        $filename = $componentName . '-' . $originalFilename;
+                        $targetPath = trailingslashit($uploadDir['path']) . $filename;
 
-                    if (!file_exists($targetPath)) copy($thumbnail, $targetPath);
+                        if (!file_exists($targetPath)) copy($thumbnail, $targetPath);
 
-                    $filetype = wp_check_filetype($filename, null);
-                    $attachment = [
-                        'post_mime_type' => $filetype['type'],
-                        'post_title'     => sanitize_file_name($filename),
-                        'post_content'   => '',
-                        'post_status'    => 'inherit'
-                    ];
-                    $attachID = wp_insert_attachment($attachment, $targetPath, $postID);
+                        $filetype = wp_check_filetype($filename, null);
+                        $attachment = [
+                            'post_mime_type' => $filetype['type'],
+                            'post_title'     => sanitize_file_name($filename),
+                            'post_content'   => '',
+                            'post_status'    => 'inherit'
+                        ];
+                        $attachID = wp_insert_attachment($attachment, $targetPath, $postID);
 
-                    require_once(ABSPATH . 'wp-admin/includes/image.php');
-                    $attachData = wp_generate_attachment_metadata($attachID, $targetPath);
-                    wp_update_attachment_metadata($attachID, $attachData);
+                        require_once(ABSPATH . 'wp-admin/includes/image.php');
+                        $attachData = wp_generate_attachment_metadata($attachID, $targetPath);
+                        wp_update_attachment_metadata($attachID, $attachData);
 
-                    set_post_thumbnail($postID, $attachID);
+                        set_post_thumbnail($postID, $attachID);
+                    }
+
+                    if (isset($xml->libraries)) {
+                        $libraries = [];
+
+                        foreach ($xml->libraries->library as $library) {
+                            $libraries[] = [
+                                'name' => (string)$library->name,
+                                'url' => (string)$library->url,
+                            ];
+                        }
+
+                        update_post_meta($postID, 'rtbs_libraries', $libraries);
+                    }
+
+                    if (isset($xml->references)) {
+                        $references = [];
+
+                        foreach ($xml->references->reference as $reference) {
+                            $references[] = [
+                                'title' => (string)$reference->title,
+                                'url' => (string)$reference->url,
+                            ];
+                        }
+
+                        update_post_meta($postID, 'rtbs_references', $references);
+                    }
                 }
             }
         }

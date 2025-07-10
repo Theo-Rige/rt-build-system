@@ -220,6 +220,20 @@ class Component {
         return get_post_meta(get_the_ID(), 'rtbs_references', true) ?: [];
     }
 
+    public static function getLibraryStatus($date) {
+        $date = strtotime($date);
+        $currentDate = time();
+        $sixMonthsAgo = strtotime('-6 months', $currentDate);
+        $oneYearAgo = strtotime('-1 year', $currentDate);
+        if ($date < $oneYearAgo) {
+            return Tool::loadTemplate('status/deprecated');
+        } elseif ($date < $sixMonthsAgo) {
+            return Tool::loadTemplate('status/risky');
+        } else {
+            return Tool::loadTemplate('status/maintained');
+        }
+    }
+
     /**
      * Download component as ZIP file.
      *
