@@ -197,7 +197,7 @@ class Plugin {
 
                     if (isset($xml->figma)) {
                         $figma = (string)$xml->figma;
-                        update_post_meta($postID, 'rtbs_figma', $figma);
+                        update_post_meta($postID, 'rtbs-figma', $figma);
                     }
 
                     if (isset($xml->libraries)) {
@@ -207,11 +207,11 @@ class Plugin {
                             $libraries[] = [
                                 'name' => (string)$library->name,
                                 'version' => (string)$library->version,
-                                'repository' => (string)$library->url,
+                                'repository' => (string)$library->repository,
                             ];
                         }
 
-                        update_post_meta($postID, 'rtbs_libraries', $libraries);
+                        update_post_meta($postID, 'rtbs-libraries', $libraries);
                     }
 
                     if (isset($xml->references)) {
@@ -225,7 +225,7 @@ class Plugin {
                             ];
                         }
 
-                        update_post_meta($postID, 'rtbs_references', $references);
+                        update_post_meta($postID, 'rtbs-references', $references);
                     }
                 }
             }

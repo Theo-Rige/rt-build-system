@@ -15,7 +15,7 @@
         <!-- /wp:list -->
     ]]>
     </description>
-    <figma>https://www.figma.com/design/YwtIKdIMJFH4CLZovr9AJO/Build-System-V2?node-id=0-1&t=97zXLzPPOrg0HrjG-1</figma>
+    <figma><![CDATA[https://www.figma.com/design/YwtIKdIMJFH4CLZovr9AJO/Build-System-V2?node-id=0-1&t=97zXLzPPOrg0HrjG-1]]></figma>
     <libraries>
         <library>
             <name>Embla Carousel</name>
