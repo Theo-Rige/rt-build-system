@@ -44,12 +44,12 @@ wp_head();
                     <?= __('Download ZIP folder', 'rt-build-system') ?>
                 </a>
                 <?php if ($figma) : ?>
-                    <a target="_blank" class="rtbs-button rtbs-button--secondary rtbs-button--copy-design">
+                    <a href="<?= esc_url($figma) ?>" target="_blank" class="rtbs-button rtbs-button--secondary rtbs-button--copy-design">
                         <?= Tool::loadSVG('figma') ?>
                         <?= __('Get design', 'rt-build-system') ?>
                     </a>
                 <?php endif; ?>
-                <button type="button" class="rtbs-button rtbs-button--secondary rtbs-button--copy-share">
+                <button type="button" class="rtbs-button rtbs-button--secondary rtbs-button--share">
                     <?= Tool::loadSVG('up-right-arrow') ?>
                     <?= __('Share', 'rt-build-system') ?>
                 </button>

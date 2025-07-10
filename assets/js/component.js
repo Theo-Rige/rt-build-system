@@ -66,6 +66,7 @@ class Tabs {
 const preview = document.getElementById('preview')
 const previewExpandButton = document.querySelector('#preview .rtbs-button--expand')
 const copyDesignButton = document.querySelector('.rtbs-button--copy')
+const shareButton = document.querySelector('.rtbs-button--share')
 const codeTabs = document.getElementById('code')
 
 if (preview && previewExpandButton) {
@@ -98,6 +99,19 @@ if (copyDesignButton) {
 		} else {
 			console.error('Failed to fetch clipboard data from API:', response.statusText)
 			toggleButtonState(copyDesignButton, 'copy--error')
+		}
+	})
+}
+
+if (shareButton) {
+	shareButton.addEventListener('click', async () => {
+		try {
+			await navigator.share({
+				title: document.title,
+				url: window.location.href
+			})
+		} catch (error) {
+			console.error('Failed to share:', error)
 		}
 	})
 }
