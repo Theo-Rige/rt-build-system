@@ -195,13 +195,19 @@ class Plugin {
                         set_post_thumbnail($postID, $attachID);
                     }
 
+                    if (isset($xml->figma)) {
+                        $figma = (string)$xml->figma;
+                        update_post_meta($postID, 'rtbs_figma', $figma);
+                    }
+
                     if (isset($xml->libraries)) {
                         $libraries = [];
 
                         foreach ($xml->libraries->library as $library) {
                             $libraries[] = [
                                 'name' => (string)$library->name,
-                                'url' => (string)$library->url,
+                                'version' => (string)$library->version,
+                                'repository' => (string)$library->url,
                             ];
                         }
 
@@ -213,7 +219,8 @@ class Plugin {
 
                         foreach ($xml->references->reference as $reference) {
                             $references[] = [
-                                'title' => (string)$reference->title,
+                                'name' => (string)$reference->name,
+                                'date' => (string)$reference->date,
                                 'url' => (string)$reference->url,
                             ];
                         }

@@ -54,8 +54,23 @@ class Admin {
      * @param \WP_Post $post The post object.
      */
     public static function addCustomFields($post) {
-        add_meta_box('rtbs_component_libraries', __('Libraries', 'rt-build-system'), [static::class, 'renderLibrariesMetaBox'], Plugin::COMPONENT_POST_TYPE, 'normal', 'high');
-        add_meta_box('rtbs_component_references', __('References', 'rt-build-system'), [static::class, 'renderReferencesMetaBox'], Plugin::COMPONENT_POST_TYPE, 'normal', 'high');
+        add_meta_box('rtbs-component-figma', __('Figma', 'rt-build-system'), [static::class, 'renderFigmaMetaBox'], Plugin::COMPONENT_POST_TYPE, 'normal', 'high');
+        add_meta_box('rtbs-component-libraries', __('Libraries', 'rt-build-system'), [static::class, 'renderLibrariesMetaBox'], Plugin::COMPONENT_POST_TYPE, 'normal', 'high');
+        add_meta_box('rtbs-component-references', __('References', 'rt-build-system'), [static::class, 'renderReferencesMetaBox'], Plugin::COMPONENT_POST_TYPE, 'normal', 'high');
+    }
+
+    /**
+     * Render the Figma meta box.
+     *
+     * @param \WP_Post $post The post object.
+     */
+    public static function renderFigmaMetaBox($post) {
+        $figma = get_post_meta($post->ID, 'rtbs-figma', true) ?: '';
+
+        Tool::loadTemplate('figma', [
+            'post' => $post,
+            'figma' => $figma
+        ], true);
     }
 
     /**
@@ -64,11 +79,8 @@ class Admin {
      * @param \WP_Post $post The post object.
      */
     public static function renderLibrariesMetaBox($post) {
-        $libraries = get_post_meta($post->ID, 'rtbs_libraries', true) ?: [];
-        $libraries[] = [
-            'name' => '',
-            'repository' => ''
-        ];
+        $libraries = get_post_meta($post->ID, 'rtbs-libraries', true) ?: [];
+        $libraries[] = ['name' => '', 'repository' => ''];
 
         Tool::loadTemplate('libraries', [
             'post' => $post,
@@ -82,11 +94,8 @@ class Admin {
      * @param \WP_Post $post The post object.
      */
     public static function renderReferencesMetaBox($post) {
-        $references = get_post_meta($post->ID, 'rtbs_references', true) ?: [];
-        $references[] = [
-            'title' => '',
-            'url' => ''
-        ];
+        $references = get_post_meta($post->ID, 'rtbs-references', true) ?: [];
+        $references[] = ['title' => '', 'url' => ''];
 
         Tool::loadTemplate('references', [
             'post' => $post,
@@ -104,20 +113,26 @@ class Admin {
 
         if (!current_user_can('edit_post', $postID)) return;
 
-        if (isset($_POST['rtbs_libraries'])) {
-            $_POST['rtbs_libraries'] = array_filter($_POST['rtbs_libraries'], function ($library) {
+        if (isset($_POST['rtbs-figma'])) {
+            $figma = sanitize_text_field($_POST['rtbs-figma']);
+
+            update_post_meta($postID, 'rtbs-figma', $figma);
+        }
+
+        if (isset($_POST['rtbs-libraries'])) {
+            $_POST['rtbs-libraries'] = array_filter($_POST['rtbs-libraries'], function ($library) {
                 return !empty($library['name']) && !empty($library['repository']);
             });
 
-            update_post_meta($postID, 'rtbs_libraries', $_POST['rtbs_libraries']);
+            update_post_meta($postID, 'rtbs-libraries', $_POST['rtbs-libraries']);
         }
 
-        if (isset($_POST['rtbs_references'])) {
-            $_POST['rtbs_references'] = array_filter($_POST['rtbs_references'], function ($reference) {
+        if (isset($_POST['rtbs-references'])) {
+            $_POST['rtbs-references'] = array_filter($_POST['rtbs-references'], function ($reference) {
                 return !empty($reference['title']) && !empty($reference['url']);
             });
 
-            update_post_meta($postID, 'rtbs_references', $_POST['rtbs_references']);
+            update_post_meta($postID, 'rtbs-references', $_POST['rtbs-references']);
         }
     }
 

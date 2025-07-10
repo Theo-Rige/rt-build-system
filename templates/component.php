@@ -13,7 +13,7 @@ $docs = Plugin::getDocs();
 $components = Component::getAll();
 
 $content = get_the_content();
-$dummydata = $component::$dummyData ?? [];
+$figma = get_post_meta(get_the_ID(), 'rtbs-figma', true);
 $preview = $component::loadTemplate('template', $dummydata);
 $libraries = $component::getLibraries();
 $references = $component::getReferences();
@@ -43,10 +43,12 @@ wp_head();
                     <?= Tool::loadSVG('folder-download') ?>
                     <?= __('Download ZIP folder', 'rt-build-system') ?>
                 </a>
-                <button type="button" class="rtbs-button rtbs-button--secondary rtbs-button--copy-design">
-                    <?= Tool::loadSVG('figma') ?>
-                    <?= __('Get design', 'rt-build-system') ?>
-                </button>
+                <?php if ($figma) : ?>
+                    <a target="_blank" class="rtbs-button rtbs-button--secondary rtbs-button--copy-design">
+                        <?= Tool::loadSVG('figma') ?>
+                        <?= __('Get design', 'rt-build-system') ?>
+                    </a>
+                <?php endif; ?>
                 <button type="button" class="rtbs-button rtbs-button--secondary rtbs-button--copy-share">
                     <?= Tool::loadSVG('up-right-arrow') ?>
                     <?= __('Share', 'rt-build-system') ?>

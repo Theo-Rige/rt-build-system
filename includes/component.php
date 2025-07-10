@@ -220,6 +220,12 @@ class Component {
         return get_post_meta(get_the_ID(), 'rtbs_references', true) ?: [];
     }
 
+    /**
+     * Get library status based on date.
+     *
+     * @param string $date Date string.
+     * @return string HTML template for library status.
+     */
     public static function getLibraryStatus($date) {
         $date = strtotime($date);
         $currentDate = time();

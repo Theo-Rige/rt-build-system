@@ -2,15 +2,20 @@
     <title>Moteur de recherche</title>
     <description>
     <![CDATA[
+        <!-- wp:paragraph -->
         Un moteur de recherche avec des filtres basés sur les tags et les catégories.<br />
         Il supporte :
+        <!-- /wp:paragraph -->
+        <!-- wp:list -->
         <ul>
 	        <li>Filtre par mots-clés</li>
 	        <li>Chargement infini ou pagination</li>
 	        <li>Filtres en haut ou sur le côté</li>
         </ul>
+        <!-- /wp:list -->
     ]]>
     </description>
+    <figma>https://www.figma.com/design/YwtIKdIMJFH4CLZovr9AJO/Build-System-V2?node-id=0-1&t=97zXLzPPOrg0HrjG-1</figma>
     <libraries>
         <library>
             <name>Embla Carousel</name>
@@ -18,4 +23,11 @@
             <repository>https://github.com/davidjbradshaw/embla-carousel</repository>
         </library>
     </libraries>
+    <references>
+        <reference>
+            <name>Page d'accueil d'O'spectacles</name>
+            <date>2023-10-01</date>
+            <url>https://www.ospectacles.fr/rechercher/</url>
+        </reference>
+    </references>
 </component>
