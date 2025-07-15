@@ -71,6 +71,8 @@ function toggleButtonState(button, className, duration = 2000) {
 	}, duration)
 }
 
+// Legacy functions - kept for backward compatibility but no longer used automatically
+
 function extractRepoFromUrl(url) {
 	const match = url.match(/github\.com\/([^\/]+)\/([^\/]+)/)
 	return match ? `${match[1]}/${match[2]}` : null
@@ -89,6 +91,7 @@ async function fetchLatestReleaseDate(repo) {
 	return null
 }
 
+// Server-side library status update - now relies on server-provided data
 async function updateLibraryStatus(statusCell, releaseDate) {
 	if (!releaseDate) return
 
@@ -112,35 +115,11 @@ async function updateLibraryStatus(statusCell, releaseDate) {
 	}
 }
 
+// Modified function - no longer automatically updates library dates from GitHub
 async function updateLibraryDates() {
-	const librariesGrid = document.querySelector('.grid--libraries')
-
-	if (!librariesGrid) return
-
-	const libraryGitHubRepositoryLinks = librariesGrid.querySelectorAll('a.grid__cell--link[href*="github.com"]')
-
-	libraryGitHubRepositoryLinks.forEach(async (link) => {
-		const repo = extractRepoFromUrl(link.href)
-		const index = link.dataset.index
-
-		if (!repo) return
-
-		const dateCell = librariesGrid.querySelector(`.grid__cell--date[data-index="${index}"]`)
-		const statusCell = librariesGrid.querySelector(`.grid__cell--status[data-index="${index}"]`)
-
-		if (dateCell && statusCell) {
-			try {
-				const releaseDate = await fetchLatestReleaseDate(repo)
-
-				if (releaseDate) {
-					dateCell.textContent = releaseDate.toLocaleDateString()
-					updateLibraryStatus(statusCell, releaseDate)
-				}
-			} catch (error) {
-				console.error(`Failed to update library date for ${repo}:`, error)
-			}
-		}
-	})
+	// This function is now largely empty as library dates are managed server-side
+	// Kept for backward compatibility
+	console.log('Library dates are now managed server-side. Dates will be current as fetched by the server.')
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -236,5 +215,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		new Tabs(codeTabs)
 	}
 
-	updateLibraryDates()
+	// Library dates are now managed server-side, no need to fetch them on page load
+	// updateLibraryDates() - commented out as dates are now server-provided
 })

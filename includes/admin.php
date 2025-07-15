@@ -3,6 +3,7 @@
 namespace RTBS;
 
 require_once RTBS_PLUGIN_DIR . 'includes/tool.php';
+require_once RTBS_PLUGIN_DIR . 'includes/component.php';
 
 class Admin {
 
@@ -124,7 +125,20 @@ class Admin {
                 return !empty($library['name']) && !empty($library['repository']);
             });
 
-            update_post_meta($postID, 'rtbs-libraries', $_POST['rtbs-libraries']);
+            // Fetch release dates for new libraries that don't have dates
+            $libraries = $_POST['rtbs-libraries'];
+            foreach ($libraries as $index => &$library) {
+                // If library doesn't have a date or date is empty, fetch it from GitHub
+                if (empty($library['date']) && !empty($library['repository'])) {
+                    $release_date = Component::fetchGitHubReleaseDate($library['repository']);
+                    if ($release_date) {
+                        // Convert to readable date format
+                        $library['date'] = date('n/j/Y', strtotime($release_date));
+                    }
+                }
+            }
+
+            update_post_meta($postID, 'rtbs-libraries', $libraries);
         }
 
         if (isset($_POST['rtbs-references'])) {

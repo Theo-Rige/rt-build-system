@@ -33,6 +33,61 @@ function extractRepoFromUrl(url) {
 	return match ? `${match[1]}/${match[2]}` : null
 }
 
+// Server-side refresh function for library dates
+async function refreshLibraryDates() {
+	if (!window.wp || !window.wp.data) {
+		console.warn('WordPress data API not available')
+		return
+	}
+
+	const postId = window.wp.data.select('core/editor')?.getCurrentPostId() || 
+	              new URLSearchParams(window.location.search).get('post') ||
+	              document.querySelector('#post_ID')?.value
+
+	if (!postId) {
+		console.warn('Post ID not found')
+		return
+	}
+
+	const formData = new FormData()
+	formData.append('action', 'rtbs_refresh_library_dates')
+	formData.append('id', postId)
+	formData.append('_ajax_nonce', document.querySelector('#_wpnonce')?.value || '')
+
+	try {
+		const response = await fetch(window.ajaxurl || '/wp-admin/admin-ajax.php', {
+			method: 'POST',
+			body: formData
+		})
+
+		const data = await response.json()
+		
+		if (data.success) {
+			// Update the UI with the new library dates
+			const libraries = data.data.libraries
+			const libraryEntries = document.querySelectorAll('#rtbs_component_libraries .rtbs-library')
+			
+			libraries.forEach((library, index) => {
+				const entry = libraryEntries[index]
+				if (entry && library.date) {
+					const dateInput = entry.querySelector('input[name*="[date]"]')
+					if (dateInput) {
+						dateInput.value = library.date
+						updateLatestReleaseDateDisplay(entry, new Date(library.date))
+					}
+				}
+			})
+			
+			console.log('Library dates refreshed successfully')
+		} else {
+			console.error('Failed to refresh library dates:', data.data?.message)
+		}
+	} catch (error) {
+		console.error('Error refreshing library dates:', error)
+	}
+}
+
+// Legacy function - kept for backward compatibility but no longer auto-called
 async function fetchLatestReleaseDate(repo) {
 	try {
 		const response = await fetch(`https://api.github.com/repos/${repo}/releases/latest`)
@@ -46,18 +101,22 @@ async function fetchLatestReleaseDate(repo) {
 	return null
 }
 
+// Modified function - no longer automatically fetches from GitHub
 async function getLatestReleaseDate(entry, repositoryInput) {
-	const repo = extractRepoFromUrl(repositoryInput.value)
 	const dateContainer = entry.querySelector('.rtbs-library-date')
+
+	// Check if we already have a date
+	const existingDate = entry.querySelector('input[name*="[date]"]').value
+	if (existingDate && existingDate.trim() !== '') {
+		// Date already exists, just update display without fetching
+		updateLatestReleaseDateDisplay(entry, new Date(existingDate))
+		return
+	}
 
 	dateContainer.classList.add('rtbs-library-date--loading')
 
-	if (repo && repositoryInput.checkValidity()) {
-		const releaseDate = await fetchLatestReleaseDate(repo)
-		updateLatestReleaseDateDisplay(entry, releaseDate)
-	} else {
-		updateLatestReleaseDateDisplay(entry, null)
-	}
+	// Clear any existing date and loading state
+	updateLatestReleaseDateDisplay(entry, null)
 }
 
 function getNextEntryIndex(container, itemSelector) {
@@ -93,12 +152,8 @@ function addRepeatedEntryLogic(entry, container, itemSelector, fieldPrefix, empt
 	const entryInputs = entry.querySelectorAll('input')
 	const repositoryInput = entry.querySelector('input[name*="[repository]"]')
 
-	if (repositoryInput) {
-		repositoryInput.addEventListener('blur', () => {
-			console.log(`Fetching latest release date for repository: ${repositoryInput.value}`)
-			getLatestReleaseDate(entry, repositoryInput)
-		})
-	}
+	// Repository input no longer automatically fetches dates on blur
+	// Dates will be fetched when the form is saved instead
 
 	entry.addEventListener('input', () => {
 		const lastEntryIsValid = Array.from(entryInputs).every(
@@ -141,11 +196,12 @@ function initializeRepeatedFields(config) {
 	const entries = container.querySelectorAll(itemSelector)
 	const emptyEntry = container.querySelector(`${itemSelector}:last-child`)
 
-	// Initialize existing entries for repository fetching
+	// Initialize existing entries display (but don't fetch new dates)
 	entries.forEach((entry) => {
-		const repositoryInput = entry.querySelector('input[name*="[repository]"]')
-		if (repositoryInput) {
-			getLatestReleaseDate(entry, repositoryInput)
+		const dateInput = entry.querySelector('input[name*="[date]"]')
+		if (dateInput && dateInput.value) {
+			// Update display for existing dates
+			updateLatestReleaseDateDisplay(entry, new Date(dateInput.value))
 		}
 	})
 
@@ -168,4 +224,32 @@ initializeRepeatedFields({
 	containerSelector: '#rtbs-component-references',
 	itemSelector: '.rtbs-postbox-item--reference',
 	fieldPrefix: 'rtbs-references'
+})
+
+// Add event listener for the refresh library dates button
+document.addEventListener('DOMContentLoaded', () => {
+	const refreshButton = document.getElementById('rtbs-refresh-library-dates')
+	if (refreshButton) {
+		refreshButton.addEventListener('click', async (e) => {
+			e.preventDefault()
+			refreshButton.disabled = true
+			refreshButton.textContent = 'Refreshing...'
+			
+			try {
+				await refreshLibraryDates()
+				refreshButton.textContent = 'Refresh Complete!'
+				setTimeout(() => {
+					refreshButton.textContent = 'Refresh Release Dates'
+					refreshButton.disabled = false
+				}, 2000)
+			} catch (error) {
+				console.error('Error refreshing dates:', error)
+				refreshButton.textContent = 'Refresh Failed'
+				setTimeout(() => {
+					refreshButton.textContent = 'Refresh Release Dates'
+					refreshButton.disabled = false
+				}, 2000)
+			}
+		})
+	}
 })

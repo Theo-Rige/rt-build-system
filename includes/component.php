@@ -94,6 +94,7 @@ class Component {
         add_action('wp_ajax_nopriv_rtbs_download_zip', [self::class, 'downloadZip']);
         add_action('wp_ajax_rtbs_update_library_status', [self::class, 'updateLibraryStatus']);
         add_action('wp_ajax_nopriv_rtbs_update_library_status', [self::class, 'updateLibraryStatus']);
+        add_action('wp_ajax_rtbs_refresh_library_dates', [self::class, 'refreshLibraryDatesAjax']);
     }
 
     /**
@@ -292,6 +293,91 @@ class Component {
     }
 
     /**
+     * Fetch latest release date from GitHub API.
+     *
+     * @param string $repository_url GitHub repository URL.
+     * @return string|null Release date in ISO format or null if not found.
+     */
+    public static function fetchGitHubReleaseDate($repository_url) {
+        if (empty($repository_url)) {
+            return null;
+        }
+
+        // Extract repo owner/name from GitHub URL
+        $repo = self::extractRepoFromUrl($repository_url);
+        if (!$repo) {
+            return null;
+        }
+
+        $api_url = "https://api.github.com/repos/{$repo}/releases/latest";
+        
+        // Use WordPress HTTP API for the request
+        $response = wp_remote_get($api_url, [
+            'timeout' => 10,
+            'user-agent' => 'RT-Build-System-WordPress-Plugin'
+        ]);
+
+        if (is_wp_error($response)) {
+            error_log('GitHub API request failed: ' . $response->get_error_message());
+            return null;
+        }
+
+        $status_code = wp_remote_retrieve_response_code($response);
+        if ($status_code !== 200) {
+            error_log("GitHub API returned status code: {$status_code}");
+            return null;
+        }
+
+        $body = wp_remote_retrieve_body($response);
+        $data = json_decode($body, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            error_log('Failed to decode GitHub API response');
+            return null;
+        }
+
+        return isset($data['published_at']) ? $data['published_at'] : null;
+    }
+
+    /**
+     * Extract repository owner/name from GitHub URL.
+     *
+     * @param string $url GitHub repository URL.
+     * @return string|null Repository in "owner/name" format or null if invalid.
+     */
+    public static function extractRepoFromUrl($url) {
+        if (preg_match('/github\.com\/([^\/]+)\/([^\/]+)/', $url, $matches)) {
+            return $matches[1] . '/' . $matches[2];
+        }
+        return null;
+    }
+
+    /**
+     * Update library release dates for a component.
+     *
+     * @param int $post_id The component post ID.
+     * @return array Updated libraries array.
+     */
+    public static function updateLibraryReleaseDates($post_id) {
+        $libraries = self::getLibraries($post_id);
+        
+        foreach ($libraries as $index => &$library) {
+            if (!empty($library['repository'])) {
+                $release_date = self::fetchGitHubReleaseDate($library['repository']);
+                if ($release_date) {
+                    // Convert to readable date format
+                    $library['date'] = date('n/j/Y', strtotime($release_date));
+                }
+            }
+        }
+        
+        // Update the post meta with the new dates
+        update_post_meta($post_id, 'rtbs-libraries', $libraries);
+        
+        return $libraries;
+    }
+
+    /**
      * Update library status via AJAX.
      *
      * @return void
@@ -315,5 +401,35 @@ class Component {
         $statusHTML = self::getLibraryStatus($date);
 
         wp_send_json_success($statusHTML);
+    }
+
+    /**
+     * Refresh library release dates via AJAX.
+     *
+     * @return void
+     */
+    public static function refreshLibraryDatesAjax() {
+        // Verify nonce for security
+        if (!wp_verify_nonce($_POST['_ajax_nonce'] ?? '', 'rtbs_nonce')) {
+            wp_send_json_error(['message' => __('Security check failed', 'rt-build-system')], 403);
+        }
+
+        if (!isset($_POST['id'])) {
+            wp_send_json_error(['message' => __('Missing post ID', 'rt-build-system')], 400);
+        }
+
+        $post_id = intval($_POST['id']);
+
+        // Check if user can edit this post
+        if (!current_user_can('edit_post', $post_id)) {
+            wp_send_json_error(['message' => __('Permission denied', 'rt-build-system')], 403);
+        }
+
+        $updated_libraries = self::updateLibraryReleaseDates($post_id);
+
+        wp_send_json_success([
+            'libraries' => $updated_libraries,
+            'message' => __('Library dates updated successfully', 'rt-build-system')
+        ]);
     }
 }

@@ -3,6 +3,13 @@
 use RTBS\Tool;
 ?>
 
+<div class="rtbs-libraries-header">
+    <button type="button" id="rtbs-refresh-library-dates" class="button button-secondary">
+        <?= __('Refresh Release Dates', 'rt-build-system'); ?>
+    </button>
+    <p class="description"><?= __('Library release dates will be automatically fetched when you save the component. Use the refresh button to update dates manually.', 'rt-build-system'); ?></p>
+</div>
+
 <?php foreach ($libraries as $index => $library) : ?>
     <div class="rtbs-postbox-item rtbs-postbox-item--library">
         <label for="rtbs-libraries[<?= $index ?>][name]">
