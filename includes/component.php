@@ -347,7 +347,10 @@ class Component {
      */
     public static function extractRepoFromUrl($url) {
         if (preg_match('/github\.com\/([^\/]+)\/([^\/]+)/', $url, $matches)) {
-            return $matches[1] . '/' . $matches[2];
+            $repo_name = $matches[2];
+            // Remove .git extension if present
+            $repo_name = preg_replace('/\.git$/', '', $repo_name);
+            return $matches[1] . '/' . $repo_name;
         }
         return null;
     }
